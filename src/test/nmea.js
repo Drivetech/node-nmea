@@ -1,6 +1,6 @@
 "use strict"
 
-import * as nmea from "../"
+import nmea from "../"
 import assert from "assert"
 import moment from "moment"
 

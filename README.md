@@ -5,6 +5,7 @@
 [![Build Status](https://travis-ci.org/leonciokof/node-nmea.svg)](https://travis-ci.org/leonciokof/node-nmea)
 [![devDependency Status](https://david-dm.org/leonciokof/node-nmea/dev-status.svg)](https://david-dm.org/leonciokof/node-nmea#info=devDependencies)
 [![Downloads](http://img.shields.io/npm/dm/node-nmea.svg)](https://npmjs.org/package/node-nmea)
+[![Code Climate](https://codeclimate.com/github/leonciokof/node-nmea/badges/gpa.svg)](https://codeclimate.com/github/leonciokof/node-nmea)
 
 Parser for NMEA sentences.
 
@@ -32,7 +33,7 @@ A             | FAA Mode A=autonomous, D=differential, E=estimated (dead-reckoni
 ## Parse data
 
 ```js
-import * as nmea from "nmea"
+import nmea from "node-nmea"
 
 const raw = "$GPRMC,161006.425,A,7855.6020,S,13843.8900,E,154.89,84.62,110715,173.1,W,A*30"
 const data = nmea.parse(raw)
@@ -50,7 +51,7 @@ data.mode // 'Autonomous'
 ## Random data
 
 ```js
-import * as nmea from "nmea"
+import nmea from "node-nmea"
 
 const raw = nmea.randomData()
 const data = nmea.parse(raw)
@@ -66,4 +67,43 @@ data.date // '110715'
 data.magneticVariation // '173.1,W'
 data.faa // 'A'
 data.checkSum // '30'
+```
+
+## Random data with options
+
+### Options
+
+- `datetime`: Pass a date object.
+- `gpsStatus`: Pass "A" for active or "V" for void.
+- `latitude`: Pass a number >= -90 or <= 90.
+- `longitude`: Pass a number >= -180 or <= 180.
+- `speed`: Pass a number >= 0 or <= 300.
+- `track`: Pass a number >= 0 or <= 40.
+- `magneticVariation`: Pass a string "DD.D,[W,E]" or ",". Example "10.1,W"
+- `faa`: Pass "A" for autonomous (default), "D" for differential, "E" for estimated, "M" for manual input, "S" for simulated, "N" for not valid or "P" for precise
+
+```js
+import nmea from "node-nmea"
+import moment from "moment"
+
+const opts = {
+  datetime: moment("2015-07-15 17:12:00", "YYYY-MM-DD HH:mm:ss").toDate(),
+  speed: 120.5,
+  latitude: -33.35290037001406,
+  longitude: -70.52955843508244
+}
+const raw = nmea.randomData(opts)
+const data = nmea.parse(raw)
+data.isValid() // true
+data.raw // '$GPRMC,171200.000,A,3321.1740,S,7031.7735,S,120.50,38.34,150715,0.8,E,A*0C'
+data.time // '171200.000'
+data.gpsStatus // 'A'
+data.latitude // '3321.1740,S'
+data.longitude // '7031.7735,S'
+data.speed // '120.50'
+data.track // '38.34'
+data.date // '150715'
+data.magneticVariation // '0.8,E'
+data.faa // 'A'
+data.checkSum // '0C'
 ```
