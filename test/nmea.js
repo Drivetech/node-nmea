@@ -6,9 +6,7 @@ import moment from "moment"
 
 describe("Nmea", () => {
   const data = nmea.randomData()
-  console.log(data)
   const parser = nmea.parse(data.raw)
-  console.log(parser)
 
   describe("#this.raw", () => {
     it("should return the same value passed in the constructor", () => {

@@ -1,6 +1,6 @@
 {
   "name": "node-nmea",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Parser for NMEA sentences.",
   "main": "lib",
   "scripts": {

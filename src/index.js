@@ -45,8 +45,8 @@ const gprmc = new XRegExp(
   (?<type> \\w{3}) \\,
   (?<time> \\d{6}[.]\\d{3}) \\,
   (?<gpsStatus> \\w{1}) \\,
-  (?<latitude> \\d{0,4}[.]\\d{0,4}\\,[NS]) \\,
-  (?<longitude> \\d{0,5}[.]\\d{0,4}\\,[WE]) \\,
+  (?<latitude> \\d{4}[.]\\d{4}\\,[NS]) \\,
+  (?<longitude> \\d{5}[.]\\d{4}\\,[WE]) \\,
   (?<speed> \\d{1,3}[.]\\d{1,3}) \\,
   (?<track> \\d{1,3}[.]\\d{1,3}) \\,
   (?<date> \\d{6}) \\,
@@ -74,10 +74,8 @@ export function isValid(data) {
 export function latToDmm(data) {
   const decimal = Math.abs(data)
   const degree = Math.floor(decimal)
-  const minutes = Math.floor(decimal * 60) % 60
-  const seconds = Math.round(100 * ((decimal * 3600) % 60)) / 100
   const dd = pad(degree, 2, "0")
-  const mm = (minutes + (seconds / 60)).toFixed(4)
+  const mm = pad(((decimal - degree) * 60.0).toFixed(4), 7, "0")
   const sign = data < 0 ? "S" : "N"
   return `${dd}${mm},${sign}`
 }
@@ -91,10 +89,8 @@ export function latToDmm(data) {
 export function lngToDmm(data) {
   const decimal = Math.abs(data)
   const degree = Math.floor(decimal)
-  const minutes = Math.floor(decimal * 60) % 60
-  const seconds = Math.round(100 * ((decimal * 3600) % 60)) / 100
   const dd = pad(degree, 3, "0")
-  const mm = (minutes + (seconds / 60)).toFixed(4)
+  const mm = pad(((decimal - degree) * 60.0).toFixed(4), 7, "0")
   const sign = data < 0 ? "W" : "E"
   return `${dd}${mm},${sign}`
 }
@@ -200,14 +196,14 @@ export function randomData() {
   const now = moment()
   const time = now.format("HHmmss.SSS")
   const gpsStatus = "A"
-  const lat = chance.floating({min: -90, max: 90, fixed: 2})
-  const lng = chance.floating({min: -180, max: 180, fixed: 2})
+  const lat = chance.floating({min: -90, max: 90})
+  const lng = chance.floating({min: -180, max: 180})
   const latitude = latToDmm(lat)
   const longitude = lngToDmm(lng)
-  const speed = chance.floating({min: 0, max: 300, fixed: 2})
-  const track = chance.floating({min: 0, max: 40, fixed: 2})
+  const speed = chance.floating({min: 0, max: 300}).toFixed(2)
+  const track = chance.floating({min: 0, max: 40}).toFixed(2)
   const date = now.format("DDMMYY")
-  const mvValue = chance.floating({min: 0, max: 40, fixed: 1})
+  const mvValue = chance.floating({min: 0, max: 40}).toFixed(1)
   const mvSign = chance.string({pool: "WE", length: 1})
   const mv = `${mvValue},${mvSign}`
   const magneticVariation = chance.pick([mv, ","])
