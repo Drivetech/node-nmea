@@ -5,7 +5,6 @@
 [![Build Status](https://travis-ci.org/leonciokof/node-nmea.svg)](https://travis-ci.org/leonciokof/node-nmea)
 [![devDependency Status](https://david-dm.org/leonciokof/node-nmea/dev-status.svg)](https://david-dm.org/leonciokof/node-nmea#info=devDependencies)
 [![Downloads](http://img.shields.io/npm/dm/node-nmea.svg)](https://npmjs.org/package/node-nmea)
-[![Coverage Status](https://coveralls.io/repos/leonciokof/node-nmea/badge.svg?branch=master&service=github)](https://coveralls.io/github/leonciokof/node-nmea?branch=master)
 
 Parser for NMEA sentences.
 

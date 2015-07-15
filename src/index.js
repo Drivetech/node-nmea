@@ -37,22 +37,35 @@ export function verifyChecksum(data) {
   return getChecksum(data) === data.substr(idx + 1, 2)
 }
 
+const params = {
+  type: /\w{3}/,
+  time: /\d{6}[.]\d{3}/,
+  gpsStatus: /\w{1}/,
+  latitude: /\d{4}[.]\d{4}\,[NS]/,
+  longitude: /\d{5}[.]\d{4}\,[WE]/,
+  speed: /\d{1,3}[.]\d{1,3}/,
+  track: /\d{1,3}[.]\d{1,3}/,
+  date: /\d{6}/,
+  magneticVariation: /(\d{1,3}[.]\d{1,3})?\,([WE])?/,
+  faa: /[ADENS]/,
+  gprmcCheckSum: /\w{2}/
+}
+
 /**
  * regex for gprmc valid data
  */
-const gprmc = new XRegExp(
-  `^\\$GP
-  (?<type> \\w{3}) \\,
-  (?<time> \\d{6}[.]\\d{3}) \\,
-  (?<gpsStatus> \\w{1}) \\,
-  (?<latitude> \\d{4}[.]\\d{4}\\,[NS]) \\,
-  (?<longitude> \\d{5}[.]\\d{4}\\,[WE]) \\,
-  (?<speed> \\d{1,3}[.]\\d{1,3}) \\,
-  (?<track> \\d{1,3}[.]\\d{1,3}) \\,
-  (?<date> \\d{6}) \\,
-  (?<magneticVariation> (\\d{1,3}[.]\\d{1})?\\,([WE])?) \\,
-  (?<faa> [ADENS]) (\\*)
-  (?<checkSum> \\w{2})$`, "x")
+export const gprmc = XRegExp.build(`(?x)^
+  \\$GP ({{type}}) \\,
+  ({{time}}) \\,
+  ({{gpsStatus}}) \\,
+  ({{latitude}}) \\,
+  ({{longitude}}) \\,
+  ({{speed}}) \\,
+  ({{track}}) \\,
+  ({{date}}) \\,
+  ({{magneticVariation}}) \\,
+  ({{faa}}) \\*
+  ({{gprmcCheckSum}})$`, params)
 
 /**
  * Verify if raw data is valid

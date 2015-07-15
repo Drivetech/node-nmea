@@ -1,6 +1,6 @@
 {
   "name": "node-nmea",
-  "version": "0.0.3",
+  "version": "0.1.0",
   "description": "Parser for NMEA sentences.",
   "main": "lib",
   "scripts": {
@@ -8,7 +8,7 @@
     "eslint": "eslint src",
     "clean": "rimraf lib",
     "build": "npm run clean && npm run eslint && npm run babel",
-    "test": "mocha --compilers js:babel/register"
+    "test": "mocha --compilers js:babel/register src/test"
   },
   "repository": {
     "type": "git",
