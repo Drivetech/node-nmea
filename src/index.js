@@ -232,7 +232,7 @@ function randomData(opts = {}) {
   }
 
   if ((opts.longitude >= -180) && (opts.longitude <= 180)) {
-    longitude = latToDmm(opts.longitude)
+    longitude = lngToDmm(opts.longitude)
   } else {
     longitude = lngToDmm(chance.floating({min: -180, max: 180}))
   }
