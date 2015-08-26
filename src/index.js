@@ -47,7 +47,7 @@ const params = {
   track: /\d{1,3}[.]\d{1,3}/,
   date: /\d{6}/,
   magneticVariation: /(\d{1,3}[.]\d{1,3})?\,([WE])?/,
-  faa: /[ADENS]/,
+  faa: /([ADENS])?/,
   gprmcCheckSum: /\w{2}/
 }
 
@@ -63,7 +63,8 @@ const gprmc = XRegExp.build(`(?x)^
   ({{speed}}) \\,
   ({{track}}) \\,
   ({{date}}) \\,
-  ({{magneticVariation}}) \\,
+  ({{magneticVariation}})
+  (\\,)?
   ({{faa}}) \\*
   ({{gprmcCheckSum}})$`, params)
 
@@ -197,7 +198,7 @@ function parse(raw) {
     speed: knotsToKmh(r.speed),
     track: r.track,
     magneticVariation: r.magneticVariation,
-    mode: faaModes[r.faa]
+    mode: r.faa ? faaModes[r.faa] : null
   }
 }
 
@@ -258,7 +259,9 @@ function randomData(opts = {}) {
     magneticVariation = opts.magneticVariation || chance.pick([mv, ","])
   }
 
-  if (params.faa.test(opts.faa)) {
+  if (opts.faa === undefined) {
+    faa = "A"
+  } else if (params.faa.test(opts.faa)) {
     faa = opts.faa
   } else {
     faa = "A"
