@@ -1,11 +1,10 @@
 # node-nmea
 
-[![Join the chat at https://gitter.im/leonciokof/node-nmea](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/leonciokof/node-nmea?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-[![npm version](https://badge.fury.io/js/node-nmea.svg)](http://badge.fury.io/js/node-nmea)
-[![Build Status](https://travis-ci.org/leonciokof/node-nmea.svg)](https://travis-ci.org/leonciokof/node-nmea)
-[![devDependency Status](https://david-dm.org/leonciokof/node-nmea/dev-status.svg)](https://david-dm.org/leonciokof/node-nmea#info=devDependencies)
-[![Downloads](http://img.shields.io/npm/dm/node-nmea.svg)](https://npmjs.org/package/node-nmea)
-[![Code Climate](https://codeclimate.com/github/leonciokof/node-nmea/badges/gpa.svg)](https://codeclimate.com/github/leonciokof/node-nmea)
+[![npm version](https://img.shields.io/npm/v/node-nmea.svg?style=flat-square)](https://www.npmjs.com/package/node-nmea)
+[![npm downloads](https://img.shields.io/npm/dm/node-nmea.svg?style=flat-square)](https://www.npmjs.com/package/node-nmea)
+[![Build Status](https://img.shields.io/travis/lgaticaq/node-nmea.svg?style=flat-square)](https://travis-ci.org/lgaticaq/node-nmea)
+[![devDependency Status](https://img.shields.io/david/dev/lgaticaq/node-nmea.svg?style=flat-square)](https://david-dm.org/lgaticaq/node-nmea#info=devDependencies)
+[![Join the chat at https://gitter.im/lgaticaq/node-nmea](https://img.shields.io/badge/gitter-join%20chat%20%E2%86%92-brightgreen.svg?style=flat-square)](https://gitter.im/lgaticaq/node-nmea?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 Parser for NMEA sentences.
 
@@ -29,6 +28,12 @@ A             | Status A=active or V=Void.
 173.1,W       | Magnetic Variation in degrees
 A             | FAA Mode A=autonomous, D=differential, E=estimated (dead-reckoning), M=manual input, S=simulated, N=data not valid, P=precise (4.00 and later)
 \*30          | The checksum data, always begins with \*
+
+## Installation
+
+```bash
+$ npm install node-nmea
+```
 
 ## Parse data
 
