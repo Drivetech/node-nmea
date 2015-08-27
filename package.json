@@ -1,10 +1,10 @@
 {
   "name": "node-nmea",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "Parser for NMEA sentences.",
   "main": "lib",
   "scripts": {
-    "babel": "babel src --out-dir lib --source-maps",
+    "babel": "babel src --out-dir lib",
     "eslint": "eslint src",
     "clean": "rimraf lib",
     "build": "npm run clean && npm run eslint && npm run babel",
@@ -36,5 +36,8 @@
     "chance": "^0.7.6",
     "moment": "^2.10.6",
     "xregexp": "^2.0.0"
+  },
+  "engines": {
+    "node": ">=0.10.0"
   }
 }

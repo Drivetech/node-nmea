@@ -18,8 +18,8 @@ function getChecksum(data) {
   if ((idx1 >= 0) && (idx2 >= 0)) {
     const newData = data.slice(idx1 + 1, idx2)
     let sum = 0
-    for (let i of newData) {
-      sum = sum ^ i.charCodeAt(0)
+    for (let i = 0; i < newData.length; i++) {
+      sum = sum ^ newData[i].charCodeAt(0)
     }
     checksum = chance.pad(sum.toString(16).toUpperCase(), 2)
   }
