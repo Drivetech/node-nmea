@@ -182,23 +182,28 @@ const faaModes = {
  * @return {object} data parse
  */
 function parse(raw) {
-  const r = XRegExp.exec(raw, gprmc)
-  const datetime = `${r.date} ${r.time} +00:00`
-  return {
-    raw: raw,
-    type: r.type,
-    datetime: moment(datetime, "DDMMYY HHmmss.SSS ZZ").toDate(),
-    loc: {
-      type: "Point",
-      coordinates: [
-        degToDec(r.longitude),
-        degToDec(r.latitude)
-      ]
-    },
-    speed: knotsToKmh(r.speed),
-    track: r.track,
-    magneticVariation: r.magneticVariation,
-    mode: r.faa ? faaModes[r.faa] : null
+  if (isValid(raw)) {
+    const r = XRegExp.exec(raw, gprmc)
+    const datetime = `${r.date} ${r.time} +00:00`
+    const mv = r.magneticVariation === "," ? null : r.magneticVariation
+    return {
+      raw: raw,
+      type: r.type,
+      datetime: moment(datetime, "DDMMYY HHmmss.SSS ZZ").toDate(),
+      loc: {
+        type: "Point",
+        coordinates: [
+          degToDec(r.longitude),
+          degToDec(r.latitude)
+        ]
+      },
+      speed: knotsToKmh(r.speed),
+      track: r.track,
+      magneticVariation: mv,
+      mode: r.faa ? faaModes[r.faa] : null
+    }
+  } else {
+    return null
   }
 }
 
