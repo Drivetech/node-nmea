@@ -1,6 +1,6 @@
 {
   "name": "node-nmea",
-  "version": "0.2.4",
+  "version": "0.3.0",
   "description": "Parser for NMEA sentences.",
   "main": "lib",
   "scripts": {
@@ -27,10 +27,10 @@
   },
   "homepage": "https://github.com/lgaticaq/node-nmea#readme",
   "devDependencies": {
-    "babel": "^5.8.21",
+    "babel": "^5.8.23",
     "eslint": "^1.2.1",
     "mocha": "^2.2.5",
-    "rimraf": "^2.4.2"
+    "rimraf": "^2.4.3"
   },
   "dependencies": {
     "chance": "^0.7.6",

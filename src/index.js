@@ -43,8 +43,8 @@ const params = {
   gpsStatus: /[AV]/,
   latitude: /\d{4}[.]\d{4}\,[NS]/,
   longitude: /\d{5}[.]\d{4}\,[WE]/,
-  speed: /\d{1,3}[.]\d{1,3}/,
-  track: /\d{1,3}[.]\d{1,3}/,
+  speed: /(\d{1,3}[.]\d{1,3})?/,
+  track: /(\d{1,3}[.]\d{1,3})?/,
   date: /\d{6}/,
   magneticVariation: /(\d{1,3}[.]\d{1,3})?\,([WE])?/,
   faa: /([ADENS])?/,
@@ -76,7 +76,7 @@ const gprmc = XRegExp.build(`(?x)^
  */
 function isValid(data) {
   const r = XRegExp.exec(data, gprmc)
-  return gprmc.test(data) && verifyChecksum(data) && r.gpsStatus === "A"
+  return gprmc.test(data) && verifyChecksum(data)
 }
 
 /**
@@ -140,7 +140,7 @@ function degToDec(data) {
  * @return {number} km/h
  */
 function knotsToKmh(knots) {
-  let kmh = 0.0
+  let kmh = null
   if (knots) {
     kmh = parseFloat(knots) * 1.852
   }
@@ -182,29 +182,30 @@ const faaModes = {
  * @return {object} data parse
  */
 function parse(raw) {
+  let data = {raw: raw, valid: false}
+  const r = XRegExp.exec(raw, gprmc)
   if (isValid(raw)) {
-    const r = XRegExp.exec(raw, gprmc)
     const datetime = `${r.date} ${r.time} +00:00`
+    const track = r.track === "" ? null : r.track
     const mv = r.magneticVariation === "," ? null : r.magneticVariation
-    return {
-      raw: raw,
-      type: r.type,
-      datetime: moment(datetime, "DDMMYY HHmmss.SSS ZZ").toDate(),
-      loc: {
-        type: "Point",
-        coordinates: [
-          degToDec(r.longitude),
-          degToDec(r.latitude)
-        ]
-      },
-      speed: knotsToKmh(r.speed),
-      track: r.track,
-      magneticVariation: mv,
-      mode: r.faa ? faaModes[r.faa] : null
+    data.raw = raw
+    data.type = r.type
+    data.datetime = moment(datetime, "DDMMYY HHmmss.SSS ZZ").toDate()
+    data.loc = {
+      type: "Point",
+      coordinates: [
+        degToDec(r.longitude),
+        degToDec(r.latitude)
+      ]
     }
-  } else {
-    return null
+    data.gps = r.gpsStatus === "A"
+    data.speed = knotsToKmh(r.speed)
+    data.track = track
+    data.magneticVariation = mv
+    data.mode = r.faa ? faaModes[r.faa] : null,
+    data.valid = true
   }
+  return data
 }
 
 /**

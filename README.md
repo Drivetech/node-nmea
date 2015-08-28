@@ -42,9 +42,10 @@ import nmea from "node-nmea"
 
 const raw = "$GPRMC,161006.425,A,7855.6020,S,13843.8900,E,154.89,84.62,110715,173.1,W,A*30"
 const data = nmea.parse(raw)
-data.isValid() // true
+data.valid // true
 data.raw // '$GPRMC,161006.425,A,7855.6020,S,13843.8900,E,154.89,84.62,110715,173.1,W,A*30'
 data.type // RMC
+data.gps // true
 data.datetime // Sat Jul 11 2015 13:10:06 GMT-0300 (CLT)
 data.loc // { type: 'Point', coordinates: [ 138.73149999999998, -78.9267 ] }
 data.speed // 286.85627999999997
@@ -59,19 +60,19 @@ data.mode // 'Autonomous'
 import nmea from "node-nmea"
 
 const raw = nmea.randomData()
-const data = nmea.parse(raw)
-data.isValid() // true
-data.raw // '$GPRMC,161006.425,A,7855.6020,S,13843.8900,E,154.89,84.62,110715,173.1,W,A*30'
-data.time // '161006.425'
-data.gpsStatus // 'A'
-data.latitude // '7855.6020,S'
-data.longitude // '13843.8900,E'
-data.speed // '154.89'
-data.track // '84.62'
-data.date // '110715'
-data.magneticVariation // '173.1,W'
-data.faa // 'A'
-data.checkSum // '30'
+raw.raw // '$GPRMC,161006.425,A,7855.6020,S,13843.8900,E,154.89,84.62,110715,173.1,W,A*30'
+raw.time // '161006.425'
+raw.gpsStatus // 'A'
+raw.latitude // '7855.6020,S'
+raw.longitude // '13843.8900,E'
+raw.speed // '154.89'
+raw.track // '84.62'
+raw.date // '110715'
+raw.magneticVariation // '173.1,W'
+raw.faa // 'A'
+raw.checkSum // '30'
+const data = nmea.parse(raw.raw)
+data.valid // true
 ```
 
 ## Random data with options
@@ -98,17 +99,17 @@ const opts = {
   longitude: -70.52955843508244
 }
 const raw = nmea.randomData(opts)
-const data = nmea.parse(raw)
-data.isValid() // true
-data.raw // '$GPRMC,171200.000,A,3321.1740,S,7031.7735,S,120.50,38.34,150715,0.8,E,A*0C'
-data.time // '171200.000'
-data.gpsStatus // 'A'
-data.latitude // '3321.1740,S'
-data.longitude // '7031.7735,S'
-data.speed // '120.50'
-data.track // '38.34'
-data.date // '150715'
-data.magneticVariation // '0.8,E'
-data.faa // 'A'
-data.checkSum // '0C'
+raw.raw // '$GPRMC,171200.000,A,3321.1740,S,7031.7735,S,120.50,38.34,150715,0.8,E,A*0C'
+raw.time // '171200.000'
+raw.gpsStatus // 'A'
+raw.latitude // '3321.1740,S'
+raw.longitude // '7031.7735,S'
+raw.speed // '120.50'
+raw.track // '38.34'
+raw.date // '150715'
+raw.magneticVariation // '0.8,E'
+raw.faa // 'A'
+raw.checkSum // '0C'
+const data = nmea.parse(raw.raw)
+data.valid // true
 ```
