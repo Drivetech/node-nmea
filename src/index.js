@@ -87,12 +87,11 @@ function isValid(data) {
  */
 function latToDmm(data) {
   const chance = new Chance()
-  const decimal = Math.abs(data)
-  const degree = Math.floor(decimal)
-  const dd = chance.pad(degree, 2)
-  const mm = chance.pad(((decimal - degree) * 60.0).toFixed(4), 7)
+  const tmp = data.toString().split(".")
+  const deg = chance.pad(Math.abs(tmp[0]), 2)
+  const mim = chance.pad((("0." + (tmp[1] || 0)) * 60).toFixed(4), 7)
   const sign = data < 0 ? "S" : "N"
-  return `${dd}${mm},${sign}`
+  return `${deg}${mim},${sign}`
 }
 
 /**
@@ -103,12 +102,11 @@ function latToDmm(data) {
  */
 function lngToDmm(data) {
   const chance = new Chance()
-  const decimal = Math.abs(data)
-  const degree = Math.floor(decimal)
-  const dd = chance.pad(degree, 3)
-  const mm = chance.pad(((decimal - degree) * 60.0).toFixed(4), 7)
+  const tmp = data.toString().split(".")
+  const deg = chance.pad(Math.abs(tmp[0]), 3)
+  const mim = chance.pad((("0." + (tmp[1] || 0)) * 60).toFixed(4), 7)
   const sign = data < 0 ? "W" : "E"
-  return `${dd}${mm},${sign}`
+  return `${deg}${mim},${sign}`
 }
 
 /**
@@ -119,15 +117,22 @@ function lngToDmm(data) {
  */
 function degToDec(data) {
   let decimal = 0.0
-
-  if (data) {
-    const [degree, sign] = data.split(",")
-    if (degree && sign) {
-      decimal = parseInt(degree / 100) + (parseFloat(degree) % 100) / 60
-
-      if ((sign === "S") || (sign === "W")) {
-        decimal *= -1
-      }
+  const dmmParams = {
+    deg: /\d{2,3}/,
+    min: /\d{2}[.]\d{4}/,
+    sign: /[NSWE]/
+  }
+  const dmm = XRegExp.build(`(?x)^
+    ({{deg}})
+    ({{min}})
+    \\,
+    ({{sign}})$`, dmmParams)
+  const r = XRegExp.exec(data, dmm)
+  if (r) {
+    decimal = (parseInt(r.deg) + (parseFloat(r.min) / 60)).toFixed(8)
+    decimal = parseFloat(decimal)
+    if ((r.sign === "S") || (r.sign === "W")) {
+      decimal *= -1
     }
   }
   return decimal
