@@ -25,7 +25,7 @@ A             | Status A=active or V=Void.
 154.89        | Speed over the ground in knots
 84.62         | Track angle in degrees True
 110715        | Date - 11 of July 2015
-173.1,W       | Magnetic Variation in degrees
+173.1,W       | Magnetic Variation in degrees (- West Declination, + East Declination)
 A             | FAA Mode A=autonomous, D=differential, E=estimated (dead-reckoning), M=manual input, S=simulated, N=data not valid, P=precise (4.00 and later)
 \*30          | The checksum data, always begins with \*
 
