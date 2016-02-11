@@ -32,10 +32,8 @@
   },
   "homepage": "https://github.com/lgaticaq/node-nmea#readme",
   "dependencies": {
-    "chance": "^0.8.0",
     "moment": "^2.11.2",
-    "pad": "^1.0.0",
-    "xregexp": "^3.0.0"
+    "pad": "^1.0.0"
   },
   "devDependencies": {
     "babel-cli": "^6.4.0",
