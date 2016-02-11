@@ -32,12 +32,14 @@ describe('Nmea', () => {
 
   describe('#this.loc', () => {
     it('should return true if position values is valid', () => {
-      expect(parser.loc.type).to.eql('Point');
-      expect(parser.loc.coordinates.length).to.eql(2);
-      const lng = nmea.lngToDmm(parser.loc.coordinates[0]);
-      const lat = nmea.latToDmm(parser.loc.coordinates[1]);
+      expect(parser.loc.geojson.type).to.eql('Point');
+      expect(parser.loc.geojson.coordinates.length).to.eql(2);
+      const lng = nmea.lngToDmm(parser.loc.geojson.coordinates[0]);
+      const lat = nmea.latToDmm(parser.loc.geojson.coordinates[1]);
       expect(lat).to.eql('3321.6735,S');
       expect(lng).to.eql('07030.7640,W');
+      expect(parser.loc.dmm.latitude).to.eql('3321.6735,S');
+      expect(parser.loc.dmm.longitude).to.eql('07030.7640,W');
     });
   });
 });
