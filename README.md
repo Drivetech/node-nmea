@@ -49,7 +49,7 @@ data.type // 'RMC'
 data.gps // true
 data.datetime // Sat Jul 11 2015 13:10:06 GMT-0300 (CLT)
 data.loc // { type: 'Point', coordinates: [ 138.7315, -78.9267 ] }
-data.speed: { knots: 154.89, kmh: 286.85627999999997 }
+data.speed // { knots: 154.89, kmh: 286.85627999999997 }
 data.track // '84.62'
 data.magneticVariation // '173.1,W'
 data.mode // 'Autonomous'
