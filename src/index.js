@@ -1,8 +1,7 @@
-"use strict"
+'use strict';
 
-import Chance from "chance"
-import moment from "moment"
-import {XRegExp} from "xregexp"
+import pad from 'pad';
+import moment from 'moment';
 
 /**
  * Get checksum from raw data
@@ -10,21 +9,15 @@ import {XRegExp} from "xregexp"
  * @param {string} data - raw data
  * @return {string} checksum en hex
  */
-function getChecksum(data) {
-  let checksum
-  const chance = new Chance()
-  const idx1 = data.indexOf("$GP")
-  const idx2 = data.indexOf("*")
+const getChecksum = (data) => {
+  let checksum;
+  const idx1 = data.indexOf('$GP');
+  const idx2 = data.indexOf('*');
   if ((idx1 >= 0) && (idx2 >= 0)) {
-    const newData = data.slice(idx1 + 1, idx2)
-    let sum = 0
-    for (let i = 0; i < newData.length; i++) {
-      sum = sum ^ newData[i].charCodeAt(0)
-    }
-    checksum = chance.pad(sum.toString(16).toUpperCase(), 2)
+    checksum = data.slice(idx1 + 1, idx2).split('').reduce((y, x) => y ^ x.charCodeAt(0), 0);
   }
-  return checksum
-}
+  return checksum;
+};
 
 /**
  * Verify checksum from raw data
@@ -32,41 +25,15 @@ function getChecksum(data) {
  * @param {string} data - raw data
  * @return {boolean} if valid data
  */
-function verifyChecksum(data) {
-  const idx = data.indexOf("*")
-  return getChecksum(data) === data.substr(idx + 1, 2)
-}
-
-const params = {
-  type: /\w{3}/,
-  time: /\d{6}[.]\d{3}/,
-  gpsStatus: /[AV]/,
-  latitude: /\d{4}[.]\d{4}\,[NS]/,
-  longitude: /\d{5}[.]\d{4}\,[WE]/,
-  speed: /(\d{1,3}[.]\d{1,3})?/,
-  track: /(\d{1,3}[.]\d{1,3})?/,
-  date: /\d{6}/,
-  magneticVariation: /(\d{1,3}[.]\d{1,3})?\,([WE])?/,
-  faa: /([ADENS])?/,
-  gprmcCheckSum: /\w{2}/
-}
+const verifyChecksum = (data) => {
+  const idx = data.indexOf('*');
+  return getChecksum(data) === parseInt(data.substr(idx + 1, 2), 16);
+};
 
 /**
  * regex for gprmc valid data
  */
-const gprmc = XRegExp.build(`(?x)^
-  \\$GP ({{type}}) \\,
-  ({{time}}) \\,
-  ({{gpsStatus}}) \\,
-  ({{latitude}}) \\,
-  ({{longitude}}) \\,
-  ({{speed}}) \\,
-  ({{track}}) \\,
-  ({{date}}) \\,
-  ({{magneticVariation}})
-  (\\,)?
-  ({{faa}}) \\*
-  ({{gprmcCheckSum}})$`, params)
+const gprmc = /^\$GP(\w{3})\,(\d{6}[.]\d{3})\,([AV])\,(\d{4}[.]\d{4}\,[NS])\,(\d{5}[.]\d{4}\,[WE])\,(\d{1,3}[.]\d{1,3})?\,(\d{1,3}[.]\d{1,3})\,(\d{6})\,((\d{1,3}[.]\d{1,3})?\,([WE])?)\,?([ADENS])?\*([0-9A-F]{2})$/;
 
 /**
  * Verify if raw data is valid
@@ -74,10 +41,9 @@ const gprmc = XRegExp.build(`(?x)^
  * @param {string} data - raw data
  * @return {boolean} if valid data
  */
-function isValid(data) {
-  const r = XRegExp.exec(data, gprmc)
-  return gprmc.test(data) && verifyChecksum(data)
-}
+const isValid = (data) => {
+  return gprmc.test(data) && verifyChecksum(data);
+};
 
 /**
  * Decimal latitude to degree [dmm]
@@ -85,14 +51,13 @@ function isValid(data) {
  * @param {string} data - raw data
  * @return {string} degree [dmm]
  */
-function latToDmm(data) {
-  const chance = new Chance()
-  const tmp = data.toString().split(".")
-  const deg = chance.pad(Math.abs(tmp[0]), 2)
-  const mim = chance.pad((("0." + (tmp[1] || 0)) * 60).toFixed(4), 7)
-  const sign = data < 0 ? "S" : "N"
-  return `${deg}${mim},${sign}`
-}
+const latToDmm = (data) => {
+  const tmp = data.toString().split('.');
+  const deg = pad(2, Math.abs(tmp[0]), '0');
+  const mim = pad(7, (('0.' + (tmp[1] || 0)) * 60).toFixed(4), '0');
+  const sign = data < 0 ? 'S' : 'N';
+  return `${deg}${mim},${sign}`;
+};
 
 /**
  * Decimal longitude to degree [dmm]
@@ -100,14 +65,13 @@ function latToDmm(data) {
  * @param {string} data - raw data
  * @return {string} degree [dmm]
  */
-function lngToDmm(data) {
-  const chance = new Chance()
-  const tmp = data.toString().split(".")
-  const deg = chance.pad(Math.abs(tmp[0]), 3)
-  const mim = chance.pad((("0." + (tmp[1] || 0)) * 60).toFixed(4), 7)
-  const sign = data < 0 ? "W" : "E"
-  return `${deg}${mim},${sign}`
-}
+const lngToDmm = (data) => {
+  const tmp = data.toString().split('.');
+  const deg = pad(3, Math.abs(tmp[0]), '0');
+  const mim = pad(7, (('0.' + (tmp[1] || 0)) * 60).toFixed(4), '0');
+  const sign = data < 0 ? 'W' : 'E';
+  return `${deg}${mim},${sign}`;
+};
 
 /**
  * Degree [dmm] to decimal
@@ -115,28 +79,17 @@ function lngToDmm(data) {
  * @param {string} data - Degree in dmm.
  * @return {number} decimals
  */
-function degToDec(data) {
-  let decimal = 0.0
-  const dmmParams = {
-    deg: /\d{2,3}/,
-    min: /\d{2}[.]\d{4}/,
-    sign: /[NSWE]/
-  }
-  const dmm = XRegExp.build(`(?x)^
-    ({{deg}})
-    ({{min}})
-    \\,
-    ({{sign}})$`, dmmParams)
-  const r = XRegExp.exec(data, dmm)
-  if (r) {
-    decimal = (parseInt(r.deg) + (parseFloat(r.min) / 60)).toFixed(8)
-    decimal = parseFloat(decimal)
-    if ((r.sign === "S") || (r.sign === "W")) {
-      decimal *= -1
+const degToDec = (data) => {
+  let decimal = 0.0;
+  const [deg, min, sign] = data.match(/(\d{2,3})(\d{2}[.]\d{4})\,([NSWE])/).slice(1);
+  if (deg && min && sign) {
+    decimal = parseFloat(deg) + parseFloat(min) / 60;
+    if ((sign === 'S') || (sign === 'W')) {
+      decimal *= -1;
     }
   }
-  return decimal
-}
+  return decimal;
+};
 
 /**
  * Knots to Km/h
@@ -144,13 +97,13 @@ function degToDec(data) {
  * @param {string} data - knots
  * @return {number} km/h
  */
-function knotsToKmh(knots) {
-  let kmh = null
+const knotsToKmh = (knots) => {
+  let kmh = null;
   if (knots) {
-    kmh = parseFloat(knots) * 1.852
+    kmh = parseFloat(knots) * 1.852;
   }
-  return kmh
-}
+  return kmh;
+};
 
 /**
  * km/h to knots
@@ -158,27 +111,27 @@ function knotsToKmh(knots) {
  * @param {number} data - km/h
  * @return {number} knots
  */
-function kmhToKnots(kmh) {
-  let knots = 0.0
+const kmhToKnots = (kmh) => {
+  let knots = 0.0;
   if (kmh) {
-    knots = kmh / 1.852
+    knots = kmh / 1.852;
   }
-  return knots
-}
+  return knots;
+};
 
 /**
  * FAA modes
  *
  */
 const faaModes = {
-  A: "Autonomous",
-  D: "Differential",
-  E: "Estimated",
-  M: "Manual input",
-  S: "Simulated",
-  N: "Not Valid",
-  P: "Precise"
-}
+  A: 'Autonomous',
+  D: 'Differential',
+  E: 'Estimated',
+  M: 'Manual input',
+  S: 'Simulated',
+  N: 'Not Valid',
+  P: 'Precise'
+};
 
 /**
  * Parse raw data
@@ -186,120 +139,36 @@ const faaModes = {
  * @param {string} raw - raw data
  * @return {object} data parse
  */
-function parse(raw) {
-  let data = {raw: raw, valid: false}
-  const r = XRegExp.exec(raw, gprmc)
+const parse = (raw) => {
+  let data = {raw: raw, valid: false};
+  const r = gprmc.exec(raw);
   if (isValid(raw)) {
-    const datetime = `${r.date} ${r.time} +00:00`
-    const track = r.track === "" ? null : r.track
-    const mv = r.magneticVariation === "," ? null : r.magneticVariation
-    data.raw = raw
-    data.type = r.type
-    data.datetime = moment(datetime, "DDMMYY HHmmss.SSS ZZ").toDate()
+    const track = r[7] === '' ? null : r[7];
+    const mv = r[9] === ',' ? null : r[9];
+    data.raw = raw;
+    data.type = r[1];
+    data.datetime = moment(`${r[8]}${r[2]}+00:00`, 'DDMMYYHHmmss.SSSZZ').toDate();
     data.loc = {
-      type: "Point",
+      type: 'Point',
       coordinates: [
-        degToDec(r.longitude),
-        degToDec(r.latitude)
+        degToDec(r[5]),
+        degToDec(r[4])
       ]
-    }
-    data.gps = r.gpsStatus === "A"
-    data.speed = knotsToKmh(r.speed)
-    data.track = track
-    data.magneticVariation = mv
-    data.mode = r.faa ? faaModes[r.faa] : null,
-    data.valid = true
+    };
+    data.gps = r[3] === 'A';
+    data.speed = {
+      knots: parseFloat(r[6]),
+      kmh: knotsToKmh(r[6])
+    };
+    data.track = track;
+    data.magneticVariation = mv;
+    data.mode = r[12] ? faaModes[r[12]] : null;
+    data.valid = true;
   }
-  return data
-}
+  return data;
+};
 
-/**
- * Generate random data
- *
- * @return {object} raw data parse
- */
-function randomData(opts = {}) {
-  let time, date, gpsStatus, latitude, longitude, speed, track, magneticVariation, faa
-  const chance = new Chance()
-
-  if ((opts.datetime !== undefined) && moment(opts.datetime).isValid()) {
-    time = moment(opts.datetime).format("HHmmss.SSS")
-    date = moment(opts.datetime).format("DDMMYY")
-  } else {
-    const now = moment()
-    time = now.format("HHmmss.SSS")
-    date = now.format("DDMMYY")
-  }
-
-  if (params.gpsStatus.test(opts.gpsStatus)) {
-    gpsStatus = opts.gpsStatus
-  } else {
-    gpsStatus = "A"
-  }
-
-  if ((opts.latitude >= -90) && (opts.latitude <= 90)) {
-    latitude = latToDmm(opts.latitude)
-  } else {
-    latitude = latToDmm(chance.floating({min: -90, max: 90}))
-  }
-
-  if ((opts.longitude >= -180) && (opts.longitude <= 180)) {
-    longitude = lngToDmm(opts.longitude)
-  } else {
-    longitude = lngToDmm(chance.floating({min: -180, max: 180}))
-  }
-
-  if ((opts.speed >= 0) && (opts.speed <= 300)) {
-    speed = opts.speed.toFixed(2)
-  } else {
-    speed = chance.floating({min: 0, max: 300}).toFixed(2)
-  }
-
-  if ((opts.track >= 0) && (opts.track <= 40)) {
-    track = opts.track.toFixed(2)
-  } else {
-    track = chance.floating({min: 0, max: 40}).toFixed(2)
-  }
-
-  if (params.magneticVariation.test(opts.magneticVariation)) {
-    magneticVariation = opts.magneticVariation
-  } else {
-    const mvValue = chance.floating({min: 0, max: 40}).toFixed(1)
-    const mvSign = chance.string({pool: "WE", length: 1})
-    const mv = `${mvValue},${mvSign}`
-    magneticVariation = opts.magneticVariation || chance.pick([mv, ","])
-  }
-
-  if (opts.faa === undefined) {
-    faa = "A"
-  } else if (params.faa.test(opts.faa)) {
-    faa = opts.faa
-  } else {
-    faa = "A"
-  }
-
-  const data = [
-    `$GPRMC,${time},${gpsStatus},${latitude},${longitude},${speed},`,
-    `${track},${date},${magneticVariation},${faa}*`
-  ].join("")
-  const checkSum = getChecksum(data)
-  const raw = `${data}${checkSum}`
-  return {
-    raw: raw,
-    time: time,
-    gpsStatus: gpsStatus,
-    latitude: latitude,
-    longitude: longitude,
-    speed: speed,
-    track: track,
-    date: date,
-    magneticVariation: magneticVariation,
-    faa: faa,
-    checkSum: checkSum
-  }
-}
-
-export default {
+module.exports = {
   getChecksum: getChecksum,
   verifyChecksum: verifyChecksum,
   gprmc: gprmc,
@@ -310,6 +179,5 @@ export default {
   knotsToKmh: knotsToKmh,
   kmhToKnots: kmhToKnots,
   faaModes: faaModes,
-  parse: parse,
-  randomData: randomData
-}
+  parse: parse
+};
