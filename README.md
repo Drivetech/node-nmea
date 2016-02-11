@@ -35,81 +35,22 @@ A             | FAA Mode A=autonomous, D=differential, E=estimated (dead-reckoni
 $ npm install node-nmea
 ```
 
-## Parse data
+## Use
 
+[Try on Tonic](https://tonicdev.com/npm/node-nmea)
 ```js
 import nmea from "node-nmea"
 
-const raw = "$GPRMC,161006.425,A,7855.6020,S,13843.8900,E,154.89,84.62,110715,173.1,W,A*30"
+const raw = '$GPRMC,161006.425,A,7855.6020,S,13843.8900,E,154.89,84.62,110715,173.1,W,A*30'
 const data = nmea.parse(raw)
 data.valid // true
 data.raw // '$GPRMC,161006.425,A,7855.6020,S,13843.8900,E,154.89,84.62,110715,173.1,W,A*30'
-data.type // RMC
+data.type // 'RMC'
 data.gps // true
 data.datetime // Sat Jul 11 2015 13:10:06 GMT-0300 (CLT)
-data.loc // { type: 'Point', coordinates: [ 138.73149999999998, -78.9267 ] }
-data.speed // 286.85627999999997
+data.loc // { type: 'Point', coordinates: [ 138.7315, -78.9267 ] }
+data.speed: { knots: 154.89, kmh: 286.85627999999997 }
 data.track // '84.62'
 data.magneticVariation // '173.1,W'
 data.mode // 'Autonomous'
-```
-
-## Random data
-
-```js
-import nmea from "node-nmea"
-
-const raw = nmea.randomData()
-raw.raw // '$GPRMC,161006.425,A,7855.6020,S,13843.8900,E,154.89,84.62,110715,173.1,W,A*30'
-raw.time // '161006.425'
-raw.gpsStatus // 'A'
-raw.latitude // '7855.6020,S'
-raw.longitude // '13843.8900,E'
-raw.speed // '154.89'
-raw.track // '84.62'
-raw.date // '110715'
-raw.magneticVariation // '173.1,W'
-raw.faa // 'A'
-raw.checkSum // '30'
-const data = nmea.parse(raw.raw)
-data.valid // true
-```
-
-## Random data with options
-
-### Options
-
-- `datetime`: Pass a date object.
-- `gpsStatus`: Pass "A" for active or "V" for void.
-- `latitude`: Pass a number >= -90 or <= 90.
-- `longitude`: Pass a number >= -180 or <= 180.
-- `speed`: Pass a number >= 0 or <= 300.
-- `track`: Pass a number >= 0 or <= 40.
-- `magneticVariation`: Pass a string "DD.D,[W,E]" or ",". Example "10.1,W"
-- `faa`: Pass "A" for autonomous (default), "D" for differential, "E" for estimated, "M" for manual input, "S" for simulated, "N" for not valid or "P" for precise
-
-```js
-import nmea from "node-nmea"
-import moment from "moment"
-
-const opts = {
-  datetime: moment("2015-07-15 17:12:00", "YYYY-MM-DD HH:mm:ss").toDate(),
-  speed: 120.5,
-  latitude: -33.35290037001406,
-  longitude: -70.52955843508244
-}
-const raw = nmea.randomData(opts)
-raw.raw // '$GPRMC,171200.000,A,3321.1740,S,7031.7735,S,120.50,38.34,150715,0.8,E,A*0C'
-raw.time // '171200.000'
-raw.gpsStatus // 'A'
-raw.latitude // '3321.1740,S'
-raw.longitude // '7031.7735,S'
-raw.speed // '120.50'
-raw.track // '38.34'
-raw.date // '150715'
-raw.magneticVariation // '0.8,E'
-raw.faa // 'A'
-raw.checkSum // '0C'
-const data = nmea.parse(raw.raw)
-data.valid // true
 ```
