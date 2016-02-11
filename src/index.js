@@ -149,11 +149,17 @@ const parse = (raw) => {
     data.type = r[1];
     data.datetime = moment(`${r[8]}${r[2]}+00:00`, 'DDMMYYHHmmss.SSSZZ').toDate();
     data.loc = {
-      type: 'Point',
-      coordinates: [
-        degToDec(r[5]),
-        degToDec(r[4])
-      ]
+      geojson: {
+        type: 'Point',
+        coordinates: [
+          degToDec(r[5]),
+          degToDec(r[4])
+        ]
+      },
+      dmm: {
+        latitude: r[4],
+        longitude: r[5]
+      }
     };
     data.gps = r[3] === 'A';
     data.speed = {

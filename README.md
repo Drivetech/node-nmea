@@ -48,7 +48,7 @@ data.raw // '$GPRMC,161006.425,A,7855.6020,S,13843.8900,E,154.89,84.62,110715,17
 data.type // 'RMC'
 data.gps // true
 data.datetime // Sat Jul 11 2015 13:10:06 GMT-0300 (CLT)
-data.loc // { type: 'Point', coordinates: [ 138.7315, -78.9267 ] }
+data.loc // { geojson: { type: 'Point', coordinates: [ 138.7315, -78.9267 ] }, dmm: { latitude: '7855.6020,S', longitude: '13843.8900,E' } }
 data.speed // { knots: 154.89, kmh: 286.85627999999997 }
 data.track // '84.62'
 data.magneticVariation // '173.1,W'
