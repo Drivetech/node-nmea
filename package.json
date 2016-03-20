@@ -23,7 +23,8 @@
     "nmea",
     "gps",
     "parser",
-    "gprmc"
+    "gprmc",
+    "gpgga"
   ],
   "author": "Leonardo Gatica <lgatica@protonmail.com> (https://about.me/lgatica)",
   "license": "MIT",
