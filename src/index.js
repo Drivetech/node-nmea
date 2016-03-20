@@ -33,7 +33,7 @@ const verifyChecksum = (data) => {
 /**
  * regex for GPRMC valid data
  */
-const gprmc = /^\$GP(\w{3})\,(\d{6}[.]\d{3})\,([AV])\,(\d{4}[.]\d{4}\,[NS])\,(\d{5}[.]\d{4}\,[WE])\,(\d{1,3}[.]\d{1,3})?\,(\d{1,3}[.]\d{1,3})\,(\d{6})\,((\d{1,3}[.]\d{1,3})?\,([WE])?)\,?([ADENS])?\*([0-9A-F]{2})$/;
+const gprmc = /^\$GP(\w{3})\,(\d{6}[.]\d{3})\,([AV])\,(\d{4}[.]\d{4}\,[NS])\,(\d{5}[.]\d{4}\,[WE])\,(\d{1,3}[.]\d{1,3})?\,(\d{1,3}[.]\d{1,3})?\,(\d{6})\,((\d{1,3}[.]\d{1,3})?\,([WE])?)\,?([ADENS])?\*([0-9A-F]{2})$/;
 
 /**
  * regex for GPGGA valid data
@@ -177,10 +177,10 @@ const parseRmc = (raw) => {
     };
     data.gps = r[3] === 'A';
     data.speed = {
-      knots: parseFloat(r[6]),
-      kmh: knotsToKmh(r[6])
+      knots: r[6] ? parseFloat(r[6]) : null,
+      kmh: r[6] ? knotsToKmh(r[6]) : null
     };
-    data.track = r[7] === '' ? null : r[7];
+    data.track = r[7] ? r[7] : null;
     data.magneticVariation = r[9] === ',' ? null : r[9];
     data.mode = r[12] ? faaModes[r[12]] : null;
     data.valid = true;
