@@ -1,3 +1,17 @@
+## 1.0.0 (2016-6-21)
+
+##### Chores
+
+* **node:** Remove babel and change min node version to v4 ([68f8b0b6](https://github.com/lgaticaq/node-nmea/commit/68f8b0b6b5d24639d37734b6c28af4047ee66f01))
+* **package:**
+  * update mocha to version 2.5.0 ([feb15c6e](https://github.com/lgaticaq/node-nmea/commit/feb15c6e54ab10f02b8d0d2e5e0e92c2b3534847))
+  * update babel-core to version 6.7.7 ([f06d7561](https://github.com/lgaticaq/node-nmea/commit/f06d7561ef4a55d18163687992391dfe78ef282b))
+  * update babel-cli to version 6.8.0 ([9bca3ce4](https://github.com/lgaticaq/node-nmea/commit/9bca3ce41611dcf159d2ae686ae9c9442feb607a))
+
+##### Bug Fixes
+
+* **parser:** Update regex to variations of RMC ([5956101f](https://github.com/lgaticaq/node-nmea/commit/5956101fb67ff14551c86eab209fa03641457ae1))
+
 #### 0.6.2 (2016-03-20)
 
 * Add dependencies badge ([4a87497](https://github.com/lgaticaq/node-nmea/commit/4a87497))
