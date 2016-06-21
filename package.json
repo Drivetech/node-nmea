@@ -7,7 +7,10 @@
     "pretest": "eslint .",
     "test": "istanbul cover _mocha",
     "coveralls": "coveralls < coverage/lcov.info",
-    "codeclimate": "codeclimate-test-reporter < coverage/lcov.info"
+    "codeclimate": "codeclimate-test-reporter < coverage/lcov.info",
+    "release:major": "changelog -M && git add CHANGELOG.md && git commit -m 'updated CHANGELOG.md' && npm version major && git push origin && git push origin --tags && npm publish",
+    "release:minor": "changelog -m && git add CHANGELOG.md && git commit -m 'updated CHANGELOG.md' && npm version minor && git push origin && git push origin --tags && npm publish",
+    "release:patch": "changelog -p && git add CHANGELOG.md && git commit -m 'updated CHANGELOG.md' && npm version patch && git push origin && git push origin --tags && npm publish"
   },
   "engines": {
     "node": ">=4"
@@ -38,6 +41,7 @@
     "codeclimate-test-reporter": "^0.3.3",
     "coveralls": "^2.11.9",
     "eslint": "^2.13.1",
+    "generate-changelog": "^1.0.2",
     "istanbul": "^0.4.4",
     "mocha": "^2.5.3"
   },
