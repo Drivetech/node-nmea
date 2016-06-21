@@ -3,11 +3,12 @@
 [![npm version](https://img.shields.io/npm/v/node-nmea.svg?style=flat-square)](https://www.npmjs.com/package/node-nmea)
 [![npm downloads](https://img.shields.io/npm/dm/node-nmea.svg?style=flat-square)](https://www.npmjs.com/package/node-nmea)
 [![Build Status](https://img.shields.io/travis/lgaticaq/node-nmea.svg?style=flat-square)](https://travis-ci.org/lgaticaq/node-nmea)
+[![Coverage Status](https://img.shields.io/coveralls/lgaticaq/node-nmea/master.svg?style=flat-square)](https://coveralls.io/github/lgaticaq/node-nmea?branch=master)
+[![Code Climate](https://img.shields.io/codeclimate/github/lgaticaq/node-nmea.svg?style=flat-square)](https://codeclimate.com/github/lgaticaq/node-nmea)
 [![dependency Status](https://img.shields.io/david/lgaticaq/node-nmea.svg?style=flat-square)](https://david-dm.org/lgaticaq/node-nmea#info=dependencies)
 [![devDependency Status](https://img.shields.io/david/dev/lgaticaq/node-nmea.svg?style=flat-square)](https://david-dm.org/lgaticaq/node-nmea#info=devDependencies)
-[![Join the chat at https://gitter.im/lgaticaq/node-nmea](https://img.shields.io/badge/gitter-join%20chat%20%E2%86%92-brightgreen.svg?style=flat-square)](https://gitter.im/lgaticaq/node-nmea?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-Parser for NMEA sentences.
+> Parser for NMEA sentences.
 
 Available sentences:
 * GPRMC - recommended minimum data for gps
@@ -73,3 +74,7 @@ data.track // '84.62'
 data.magneticVariation // '173.1,W'
 data.mode // 'Autonomous'
 ```
+
+## License
+
+[MIT](https://tldrlegal.com/license/mit-license)

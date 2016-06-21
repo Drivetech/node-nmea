@@ -5,7 +5,9 @@
   "main": "src",
   "scripts": {
     "pretest": "eslint .",
-    "test": "istanbul cover _mocha"
+    "test": "istanbul cover _mocha",
+    "coveralls": "coveralls < coverage/lcov.info",
+    "codeclimate": "codeclimate-test-reporter < coverage/lcov.info"
   },
   "engines": {
     "node": ">=4"
@@ -33,6 +35,8 @@
   },
   "devDependencies": {
     "chai": "^3.5.0",
+    "codeclimate-test-reporter": "^0.3.3",
+    "coveralls": "^2.11.9",
     "eslint": "^2.13.1",
     "istanbul": "^0.4.4",
     "mocha": "^2.5.3"
