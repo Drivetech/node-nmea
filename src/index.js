@@ -33,7 +33,7 @@ const verifyChecksum = (data) => {
 /**
  * regex for GPRMC valid data
  */
-const gprmc = /^\$GP(\w{3})\,(\d{6}[.]\d{3})\,([AV])\,(\d{4}[.]\d{4}\,[NS])\,(\d{5}[.]\d{4}\,[WE])\,(\d{1,3}[.]\d{1,3})?\,(\d{1,3}[.]\d{1,3})?\,(\d{6})\,((\d{1,3}[.]\d{1,3})?\,([WE])?)\,?([ADENS])?\*([0-9A-F]{2})$/;
+const gprmc = /^\$GP(\w{3})\,(\d{6}([.]\d+)?)\,([AV])\,(\d{4}([.]\d+)?\,[NS])\,(\d{5}([.]\d+)?\,[WE])\,(\d{1,3}[.]\d{1,3})?\,(\d{1,3}[.]\d{1,3})?\,(\d{6})\,((\d{1,3}[.]\d{1,3})?\,([WE])?)\,?([ADENS])?\*([0-9A-F]{2})$/;
 
 /**
  * regex for GPGGA valid data
@@ -161,28 +161,28 @@ const parseRmc = (raw) => {
   const r = gprmc.exec(raw);
   if (isValid(raw)) {
     data.type = r[1];
-    data.datetime = moment(`${r[8]}${r[2]}+00:00`, 'DDMMYYHHmmss.SSSZZ').toDate();
+    data.datetime = moment(`${r[11]}${r[2]}+00:00`, 'DDMMYYHHmmss.SSSZZ').toDate();
     data.loc = {
       geojson: {
         type: 'Point',
         coordinates: [
-          degToDec(r[5]),
-          degToDec(r[4])
+          degToDec(r[7]),
+          degToDec(r[5])
         ]
       },
       dmm: {
-        latitude: r[4],
-        longitude: r[5]
+        latitude: r[5],
+        longitude: r[7]
       }
     };
-    data.gps = r[3] === 'A';
+    data.gps = r[4] === 'A';
     data.speed = {
-      knots: r[6] ? parseFloat(r[6]) : null,
-      kmh: r[6] ? knotsToKmh(r[6]) : null
+      knots: r[9] ? parseFloat(r[9]) : null,
+      kmh: r[9] ? knotsToKmh(r[9]) : null
     };
-    data.track = r[7] ? r[7] : null;
-    data.magneticVariation = r[9] === ',' ? null : r[9];
-    data.mode = r[12] ? faaModes[r[12]] : null;
+    data.track = r[10] ? r[10] : null;
+    data.magneticVariation = r[12] === ',' ? null : r[12];
+    data.mode = r[15] ? faaModes[r[15]] : null;
     data.valid = true;
   }
   return data;
