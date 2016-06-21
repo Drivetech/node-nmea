@@ -1,3 +1,6 @@
 node_modules
-src
-*.
+test
+coverage
+LICENSE
+example.js
+.*
