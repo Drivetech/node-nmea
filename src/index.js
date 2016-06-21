@@ -1,7 +1,7 @@
 'use strict';
 
-import pad from 'pad';
-import moment from 'moment';
+const pad = require('pad');
+const moment = require('moment');
 
 /**
  * Get checksum from raw data
@@ -9,7 +9,7 @@ import moment from 'moment';
  * @param {string} data - raw data
  * @return {string} checksum en hex
  */
-const getChecksum = (data) => {
+const getChecksum = data => {
   let checksum;
   const idx1 = data.indexOf('$GP');
   const idx2 = data.indexOf('*');
@@ -25,7 +25,7 @@ const getChecksum = (data) => {
  * @param {string} data - raw data
  * @return {boolean} if valid data
  */
-const verifyChecksum = (data) => {
+const verifyChecksum = data => {
   const idx = data.indexOf('*');
   return getChecksum(data) === parseInt(data.substr(idx + 1, 2), 16);
 };
@@ -46,7 +46,7 @@ const gpgga = /^\$GP(\w{3})\,(\d{6}([.]\d+)?)\,(\d{4}[.]\d+\,[NS])\,(\d{5}[.]\d+
  * @param {string} data - raw data
  * @return {boolean} if valid data
  */
-const isValid = (data) => {
+const isValid = data => {
   return gprmc.test(data) && verifyChecksum(data);
 };
 
@@ -56,7 +56,7 @@ const isValid = (data) => {
  * @param {string} data - raw data
  * @return {string} degree [dmm]
  */
-const latToDmm = (data) => {
+const latToDmm = data => {
   const tmp = data.toString().split('.');
   const deg = pad(2, Math.abs(tmp[0]), '0');
   const mim = pad(7, (('0.' + (tmp[1] || 0)) * 60).toFixed(4), '0');
@@ -70,7 +70,7 @@ const latToDmm = (data) => {
  * @param {string} data - raw data
  * @return {string} degree [dmm]
  */
-const lngToDmm = (data) => {
+const lngToDmm = data => {
   const tmp = data.toString().split('.');
   const deg = pad(3, Math.abs(tmp[0]), '0');
   const mim = pad(7, (('0.' + (tmp[1] || 0)) * 60).toFixed(4), '0');
@@ -84,9 +84,12 @@ const lngToDmm = (data) => {
  * @param {string} data - Degree in dmm.
  * @return {number} decimals
  */
-const degToDec = (data) => {
+const degToDec = data => {
   let decimal = 0.0;
-  const [deg, min, sign] = data.match(/(\d{2,3})(\d{2}[.]\d+)\,([NSWE])/).slice(1);
+  const _data = data.match(/(\d{2,3})(\d{2}[.]\d+)\,([NSWE])/).slice(1);
+  const deg = _data;
+  const min = _data;
+  const sign = _data;
   if (deg && min && sign) {
     decimal = parseFloat(deg) + parseFloat(min) / 60;
     if ((sign === 'S') || (sign === 'W')) {
@@ -102,7 +105,7 @@ const degToDec = (data) => {
  * @param {string} data - knots
  * @return {number} km/h
  */
-const knotsToKmh = (knots) => {
+const knotsToKmh = knots => {
   let kmh = null;
   if (knots) {
     kmh = parseFloat(knots) * 1.852;
@@ -116,7 +119,7 @@ const knotsToKmh = (knots) => {
  * @param {number} data - km/h
  * @return {number} knots
  */
-const kmhToKnots = (kmh) => {
+const kmhToKnots = kmh => {
   let knots = 0.0;
   if (kmh) {
     knots = kmh / 1.852;
@@ -156,7 +159,7 @@ const gpsQualities = {
  * @param {string} raw - raw data
  * @return {object} data parse
  */
-const parseRmc = (raw) => {
+const parseRmc = raw => {
   let data = {raw: raw, valid: false};
   const r = gprmc.exec(raw);
   if (isValid(raw)) {
@@ -194,7 +197,7 @@ const parseRmc = (raw) => {
  * @param {string} raw - raw data
  * @return {object} data parse
  */
-const parseGga = (raw) => {
+const parseGga = raw => {
   let data = {raw: raw, valid: false};
   const r = gpgga.exec(raw);
   data.raw = raw;
@@ -224,7 +227,7 @@ const parseGga = (raw) => {
   return data;
 };
 
-const parse = (raw) => {
+const parse = raw => {
   let data = {raw: raw, valid: false};
   if (gprmc.test(raw)) {
     data = parseRmc(raw);

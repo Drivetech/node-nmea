@@ -1,8 +1,8 @@
 'use strict';
 
-import nmea from '../lib';
-import {expect} from 'chai';
-import moment from 'moment';
+const nmea = require('../src');
+const expect = require('chai').expect;
+const moment = require('moment');
 
 describe('Nmea', () => {
   describe('GPRMC', () => {
