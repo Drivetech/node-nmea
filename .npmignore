@@ -4,3 +4,4 @@ coverage
 LICENSE
 example.js
 .*
+*.md
