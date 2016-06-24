@@ -1,3 +1,9 @@
+#### 1.0.1 (2016-6-24)
+
+##### Bug Fixes
+
+* **parser:** Fix get deg, min and sign in degToDec ([f2caa0d2](https://github.com/lgaticaq/node-nmea/commit/f2caa0d2d427749211d447907cb3e32006db5f74))
+
 ## 1.0.0 (2016-6-21)
 
 ##### Chores
