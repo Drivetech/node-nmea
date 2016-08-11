@@ -1,3 +1,16 @@
+#### 1.0.2 (2016-8-11)
+
+##### Chores
+
+* **package:**
+  * Remove pad ([11e94c03](https://github.com/lgaticaq/node-nmea/commit/11e94c03a37baadb5a66efb0053ac0fd12d7e440))
+  * Update dependencies ([05fb3329](https://github.com/lgaticaq/node-nmea/commit/05fb3329d259de8169018eae70ad3c87b5cc6314))
+  * update mocha to version 3.0.0 ([e7a30540](https://github.com/lgaticaq/node-nmea/commit/e7a30540b49e6cca7786799d3b7f400005510644))
+  * update eslint to version 3.0.0 ([53af3297](https://github.com/lgaticaq/node-nmea/commit/53af32976784fc66ef24246876d134eaa3fccba6))
+* **src:**
+  * Remove moment ([4f6b991c](https://github.com/lgaticaq/node-nmea/commit/4f6b991ca9bb850874acfd0a7edf10b43813f3bb))
+  * Remove moment ([175203d2](https://github.com/lgaticaq/node-nmea/commit/175203d2bb55c1aa59be2acb234565ac57c77936))
+
 #### 1.0.1 (2016-6-24)
 
 ##### Bug Fixes
