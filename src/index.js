@@ -1,7 +1,6 @@
 'use strict';
 
 const pad = require('pad');
-const moment = require('moment');
 
 /**
  * Get checksum from raw data
@@ -164,7 +163,9 @@ const parseRmc = raw => {
   const r = gprmc.exec(raw);
   if (isValid(raw)) {
     data.type = r[1];
-    data.datetime = moment(`${r[11]}${r[2]}+00:00`, 'DDMMYYHHmmss.SSSZZ').toDate();
+    const datetime = `${r[11]}${r[2]}`;
+    const pattern = /(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})[.]\d{1,3}/;
+    data.datetime = new Date(datetime.replace(pattern, '20$3-$2-$1T$4:$5:$6.000Z'));
     data.loc = {
       geojson: {
         type: 'Point',
@@ -202,7 +203,10 @@ const parseGga = raw => {
   const r = gpgga.exec(raw);
   data.raw = raw;
   data.type = r[1];
-  data.datetime = moment(`${r[2]}+00:00`, 'HHmmss.SSSZZ').toDate();
+  const now = new Date();
+  const date = now.toISOString().split('T')[0];
+  const pattern = /(\d{2})(\d{2})(\d{2})[.](\d{1,3})/;
+  data.datetime = new Date(`${date}T${r[2].replace(pattern, '$1:$2:$3')}.000Z`);
   data.loc = {
     geojson: {
       type: 'Point',

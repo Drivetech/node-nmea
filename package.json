@@ -33,7 +33,6 @@
   },
   "homepage": "https://github.com/lgaticaq/node-nmea#readme",
   "dependencies": {
-    "moment": "^2.14.1",
     "pad": "^1.0.0"
   },
   "devDependencies": {
