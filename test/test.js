@@ -2,7 +2,6 @@
 
 const nmea = require('../src');
 const expect = require('chai').expect;
-const moment = require('moment');
 
 describe('Nmea', () => {
   describe('GPRMC', () => {
@@ -15,14 +14,6 @@ describe('Nmea', () => {
 
     it('should return true if checksum is valid', () => {
       expect(nmea.isValid(parser.raw)).to.be.true;
-    });
-
-    it('should return true if datetime values is valid', () => {
-      const datetime = moment.utc(parser.datetime);
-      const date = datetime.format('DDMMYY');
-      expect(date).to.eql('090216');
-      const time = datetime.format('HHmmss.SSS');
-      expect(time).to.eql('194329.000');
     });
 
     it('should return true if position values is valid', () => {
@@ -66,14 +57,6 @@ describe('Nmea', () => {
       expect(nmea.isValid(parser.raw)).to.be.true;
     });
 
-    it('should return true if datetime values is valid', () => {
-      const datetime = moment.utc(parser.datetime);
-      const date = datetime.format('DDMMYY');
-      expect(date).to.eql('010616');
-      const time = datetime.format('HHmmss');
-      expect(time).to.eql('192053');
-    });
-
     it('should return true if position values is valid', () => {
       expect(parser.loc.geojson.type).to.eql('Point');
       expect(parser.loc.geojson.coordinates.length).to.eql(2);
@@ -113,12 +96,6 @@ describe('Nmea', () => {
 
     it('should return true if checksum is valid', () => {
       expect(nmea.verifyChecksum(parser.raw)).to.be.true;
-    });
-
-    it('should return true if datetime value is valid', () => {
-      const datetime = moment.utc(parser.datetime);
-      const time = datetime.format('HHmmss');
-      expect(time).to.eql('172814');
     });
 
     it('should return true if position value is valid', () => {
