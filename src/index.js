@@ -61,8 +61,8 @@ const isValid = data => {
  */
 const latToDmm = data => {
   const tmp = data.toString().split('.');
-  const deg = pad(2, Math.abs(tmp[0]), '0');
-  const mim = pad(7, (('0.' + (tmp[1] || 0)) * 60).toFixed(4), '0');
+  const deg = pad(Math.abs(tmp[0]), 2, '0');
+  const mim = pad((('0.' + (tmp[1] || 0)) * 60).toFixed(4), 7, '0');
   const sign = data < 0 ? 'S' : 'N';
   return `${deg}${mim},${sign}`;
 };
@@ -75,8 +75,8 @@ const latToDmm = data => {
  */
 const lngToDmm = data => {
   const tmp = data.toString().split('.');
-  const deg = pad(3, Math.abs(tmp[0]), '0');
-  const mim = pad(7, (('0.' + (tmp[1] || 0)) * 60).toFixed(4), '0');
+  const deg = pad(Math.abs(tmp[0]), 3, '0');
+  const mim = pad((('0.' + (tmp[1] || 0)) * 60).toFixed(4), 7, '0');
   const sign = data < 0 ? 'W' : 'E';
   return `${deg}${mim},${sign}`;
 };
