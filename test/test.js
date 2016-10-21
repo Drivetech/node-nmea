@@ -33,7 +33,7 @@ describe('Nmea', () => {
     });
 
     it('should return true if track value is valid', () => {
-      expect(parser.track).to.eql('0.00');
+      expect(parser.track).to.eql(0.00);
     });
 
     it('should return true if magnetic variation value is valid', () => {
@@ -74,7 +74,7 @@ describe('Nmea', () => {
     });
 
     it('should return true if track value is valid', () => {
-      expect(parser.track).to.eql('295.88');
+      expect(parser.track).to.eql(295.88);
     });
 
     it('should return true if magnetic variation value is valid', () => {

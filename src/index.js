@@ -188,7 +188,7 @@ const parseRmc = raw => {
       knots: r[9] ? parseFloat(r[9]) : null,
       kmh: r[9] ? knotsToKmh(r[9]) : null
     };
-    data.track = r[10] ? r[10] : null;
+    data.track = r[10] ? parseFloat(r[10]) : null;
     data.magneticVariation = r[12] === ',' ? null : r[12];
     data.mode = r[15] ? faaModes[r[15]] : null;
     data.valid = true;
