@@ -1,3 +1,18 @@
+#### 1.0.3 (2016-10-21)
+
+##### Chores
+
+* **test:** Add more test ([f0d5a82b](https://github.com/lgaticaq/node-nmea/commit/f0d5a82b5ba519f8f0ffb35c4f1b85a11510d116))
+* **package:**
+  * Add yarn ([9ddd271b](https://github.com/lgaticaq/node-nmea/commit/9ddd271bea4f6ab121b6fc46618120fc15f56898))
+  * Update dependencies ([bd9cfc87](https://github.com/lgaticaq/node-nmea/commit/bd9cfc871fb1edfe562dccc667c2ecb0b6949447))
+  * update codeclimate-test-reporter to version 0.4.0 ([2409818c](https://github.com/lgaticaq/node-nmea/commit/2409818caf3f8ede7e279540531369658102a77e))
+
+##### Bug Fixes
+
+* **pad:** Fix parse latToDmm and lngToDmm ([92f33a2a](https://github.com/lgaticaq/node-nmea/commit/92f33a2a3ea434f4f8a5bf5162119fb1671ed188))
+* **parser:** Parse to float track data ([0e530450](https://github.com/lgaticaq/node-nmea/commit/0e530450947b74652ca127e5cb0dd484bc6b2b26))
+
 #### 1.0.2 (2016-8-11)
 
 ##### Chores
