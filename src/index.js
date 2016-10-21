@@ -1,7 +1,6 @@
 'use strict';
 
 const pad = (n, width, z) => {
-  z = z || '0';
   n = n + '';
   return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
 };
@@ -16,9 +15,7 @@ const getChecksum = data => {
   let checksum;
   const idx1 = data.indexOf('$GP');
   const idx2 = data.indexOf('*');
-  if ((idx1 >= 0) && (idx2 >= 0)) {
-    checksum = data.slice(idx1 + 1, idx2).split('').reduce((y, x) => y ^ x.charCodeAt(0), 0);
-  }
+  checksum = data.slice(idx1 + 1, idx2).split('').reduce((y, x) => y ^ x.charCodeAt(0), 0);
   return checksum;
 };
 
@@ -93,11 +90,9 @@ const degToDec = data => {
   const deg = _data[0];
   const min = _data[1];
   const sign = _data[2];
-  if (deg && min && sign) {
-    decimal = parseFloat(deg) + parseFloat(min) / 60;
-    if ((sign === 'S') || (sign === 'W')) {
-      decimal *= -1;
-    }
+  decimal = parseFloat(deg) + parseFloat(min) / 60;
+  if ((sign === 'S') || (sign === 'W')) {
+    decimal *= -1;
   }
   return decimal;
 };
@@ -108,13 +103,7 @@ const degToDec = data => {
  * @param {string} data - knots
  * @return {number} km/h
  */
-const knotsToKmh = knots => {
-  let kmh = null;
-  if (knots) {
-    kmh = parseFloat(knots) * 1.852;
-  }
-  return kmh;
-};
+const knotsToKmh = knots => parseFloat(knots) * 1.852;
 
 /**
  * km/h to knots

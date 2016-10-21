@@ -84,6 +84,16 @@ describe('Nmea', () => {
     it('should return true if mode value is valid', () => {
       expect(parser.mode).to.eql('Autonomous');
     });
+
+    it('should return data GPRMC with empty fields', () => {
+      const data = '$GPRMC,194329.000,A,3321.6735,S,07030.7640,W,,,090216,173.1,W,*50';
+      const parser = nmea.parse(data);
+      expect(parser.speed.knots).to.eql(null);
+      expect(parser.speed.kmh).to.eql(null);
+      expect(parser.track).to.eql(null);
+      expect(parser.magneticVariation).to.eql('173.1,W');
+      expect(parser.mode).to.eql(null);
+    });
   });
 
   describe('GPGGA', () => {
@@ -131,6 +141,43 @@ describe('Nmea', () => {
 
     it('should return true if reference station id values is valid', () => {
       expect(parser.refStationId).to.eql('0031');
+    });
+
+    it('should return data GPGGA with empty fields', () => {
+      const data = '$GPGGA,172814.0,3723.46587704,N,12202.26957864,W,2,6,,,,,,,0031*4F';
+      const parser = nmea.parse(data);
+      expect(parser.hdop).to.eql(null);
+      expect(parser.altitude).to.eql(null);
+      expect(parser.geoidalSeparation).to.eql(null);
+      expect(parser.ageGpsData).to.eql(null);
+    });
+  });
+
+  describe('Extras', () => {
+    it('should return latitude in dmm', () => {
+      expect(nmea.latToDmm(-33.38113666666667)).to.eql('3322.8682,S');
+      expect(nmea.lngToDmm(-70.77628166666666)).to.eql('07046.5769,W');
+      expect(nmea.latToDmm(-33)).to.eql('3300.0000,S');
+      expect(nmea.lngToDmm(-70)).to.eql('07000.0000,W');
+      expect(nmea.latToDmm(33)).to.eql('3300.0000,N');
+      expect(nmea.lngToDmm(70)).to.eql('07000.0000,E');
+      expect(nmea.kmhToKnots()).to.eql(0.0);
+      expect(nmea.kmhToKnots(100)).to.eql(53.99568034557235);
+    });
+  });
+
+  describe('Error', () => {
+    it('should return invalid data', () => {
+      const data = 'GGA,172814.0,3723.46587704,N,12202.26957864,W,2,6,1.2,18.893,M,-25.669,M,2.0,0031';
+      const parser = nmea.parse(data);
+      expect(parser.raw).to.eql(data);
+      expect(parser.valid).to.be.false;
+    });
+    it('should return invalid data', () => {
+      const data = '$GPRMC,194329.000,A,3321.6735,S,07030.7640,W,0.00,0.00,090216,,,A*6F';
+      const parser = nmea.parse(data);
+      expect(parser.raw).to.eql(data);
+      expect(parser.valid).to.be.false;
     });
   });
 });
