@@ -34,7 +34,7 @@
   "homepage": "https://github.com/lgaticaq/node-nmea#readme",
   "dependencies": {},
   "devDependencies": {
-    "chai": "^3.5.0",
+    "chai": "^4.0.1",
     "codeclimate-test-reporter": "^0.4.0",
     "coveralls": "^2.11.14",
     "eslint": "^3.8.1",
