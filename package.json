@@ -4,16 +4,17 @@
   "description": "Parser for NMEA sentences.",
   "main": "src",
   "scripts": {
-    "pretest": "eslint .",
+    "lint": "eslint . --fix",
+    "format": "prettier-standard 'src/**/*.js' 'test/**/*.js'",
+    "precommit": "lint-staged",
+    "pretest": "npm run lint -s && npm run format -s",
     "test": "istanbul cover _mocha",
-    "coveralls": "coveralls < coverage/lcov.info",
-    "codeclimate": "codeclimate-test-reporter < coverage/lcov.info",
     "release:major": "changelog -M && git add CHANGELOG.md && git commit -m 'updated CHANGELOG.md' && npm version major && git push origin && git push origin --tags && npm publish",
     "release:minor": "changelog -m && git add CHANGELOG.md && git commit -m 'updated CHANGELOG.md' && npm version minor && git push origin && git push origin --tags && npm publish",
     "release:patch": "changelog -p && git add CHANGELOG.md && git commit -m 'updated CHANGELOG.md' && npm version patch && git push origin && git push origin --tags && npm publish"
   },
   "engines": {
-    "node": ">=4"
+    "node": ">=6"
   },
   "repository": {
     "type": "git",
@@ -34,39 +35,47 @@
   "homepage": "https://github.com/lgaticaq/node-nmea#readme",
   "dependencies": {},
   "devDependencies": {
-    "chai": "^4.0.1",
-    "codeclimate-test-reporter": "^0.4.0",
-    "coveralls": "^2.11.14",
-    "eslint": "^4.1.0",
-    "generate-changelog": "^1.0.2",
+    "chai": "^4.0.2",
+    "eslint": "^4.1.1",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-plugin-import": "^2.6.0",
+    "eslint-plugin-node": "^5.1.0",
+    "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "generate-changelog": "^1.3.0",
+    "husky": "^0.14.1",
     "istanbul": "^0.4.5",
-    "mocha": "^3.1.2"
+    "lint-staged": "^4.0.0",
+    "mocha": "^3.4.2",
+    "prettier-standard": "^5.1.0"
   },
   "eslintConfig": {
-    "env": {
-      "es6": true,
-      "node": true,
-      "mocha": true
+    "extends": "standard",
+    "parserOptions": {
+      "ecmaVersion": 2017
     },
-    "extends": "eslint:recommended",
+    "env": {
+      "node": true,
+      "mocha": true,
+      "es6": true
+    },
     "rules": {
-      "indent": [
-        2,
-        2
-      ],
-      "linebreak-style": [
-        2,
-        "unix"
-      ],
-      "quotes": [
-        2,
-        "single"
-      ],
-      "semi": [
-        2,
-        "always"
+      "no-console": [
+        "error"
       ]
     }
+  },
+  "lint-staged": {
+    "src/**/*.js": [
+      "eslint --fix",
+      "prettier-standard",
+      "git add"
+    ],
+    "test/**/*.js": [
+      "eslint --fix",
+      "prettier-standard",
+      "git add"
+    ]
   },
   "tonicExampleFilename": "example.js"
 }

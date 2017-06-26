@@ -1,4 +1,10 @@
+.git
 node_modules
-test
 coverage
-.*
+test
+.editorconfig
+.eslintignore
+.gitignore
+.nvmrc
+.travis.yml
+CHANGELOG.md
