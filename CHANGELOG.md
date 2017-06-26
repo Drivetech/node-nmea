@@ -1,3 +1,12 @@
+#### 1.0.4 (2017-06-26)
+
+##### Chores
+
+* **package:**
+  * update dependencies ([326acf3b](https://github.com/lgaticaq/node-nmea/commit/326acf3b3f68eb0ea452279f7f7d46b7752fb71f))
+  * update eslint to version 4.1.0 ([704c960a](https://github.com/lgaticaq/node-nmea/commit/704c960a80b284344159d11f0d2c89d5f74b9cbf))
+  * update chai to version 4.0.1 ([63356d20](https://github.com/lgaticaq/node-nmea/commit/63356d20e43132db116495c70a307f83c3adf0f8))
+
 #### 1.0.3 (2016-10-21)
 
 ##### Chores
