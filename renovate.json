@@ -1,3 +1,4 @@
 {
+  "automerge": "minor",
   "extends": [":library"]
 }
