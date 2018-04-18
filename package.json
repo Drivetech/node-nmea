@@ -46,7 +46,7 @@
     "husky": "0.14.3",
     "istanbul": "0.4.5",
     "lint-staged": "7.0.4",
-    "mocha": "5.1.0",
+    "mocha": "5.1.1",
     "prettier-standard": "8.0.1"
   },
   "eslintConfig": {
