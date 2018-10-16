@@ -162,7 +162,6 @@ const parseRmc = raw => {
   let data = { raw: raw, valid: false }
   const r = gprmc.exec(raw)
   if (isValid(raw)) {
-    console.log(r)
     data.type = r[1]
     const datetime = `${r[11]}${r[2]}`
     const pattern = /(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})[.]\d{1,3}/
