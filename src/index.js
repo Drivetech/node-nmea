@@ -39,7 +39,7 @@ const verifyChecksum = data => {
 /**
  * regex for GPRMC valid data
  */
-const gprmc = /^\$G[NP](\w{3}),(\d{6}([.]\d+)?),([AV]),(\d{4}([.]\d+)?,[NS]),(\d{5}([.]\d+)?,[WE]),(\d{1,3}[.]\d{1,3})?,(\d{1,3}[.]\d{1,3})?,(\d{6}),((.*)?,(.*)?),?([ADENS])?\*([0-9A-F]{2})$/
+const gprmc = /^\$G[NP](\w{3}),(\d{6}([.]\d+)?),([AV]),(\d{4}([.]\d+)?,[NS]),(\d{5}([.]\d+)?,[WE]),(\d{1,3}[.]\d{1,3})?,(\d{1,3}[.]\d{1,3})?,(\d{6}),((\d{1,3}[.]\d{1,3})?,([WE])?),?([ADENS])?\*([0-9A-F]{2})$/
 /**
  * regex for GPGGA valid data
  */
@@ -162,6 +162,7 @@ const parseRmc = raw => {
   let data = { raw: raw, valid: false }
   const r = gprmc.exec(raw)
   if (isValid(raw)) {
+    console.log(r)
     data.type = r[1]
     const datetime = `${r[11]}${r[2]}`
     const pattern = /(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})[.]\d{1,3}/
@@ -184,7 +185,7 @@ const parseRmc = raw => {
       kmh: r[9] ? knotsToKmh(r[9]) : null
     }
     data.track = r[10] ? parseFloat(r[10]) : null
-    data.magneticVariation = null
+    data.magneticVariation = r[12] === ',' ? null : r[12]
     data.mode = r[15] ? faaModes[r[15]] : null
     data.valid = true
   }
@@ -273,6 +274,7 @@ const parse = raw => {
 module.exports = {
   getChecksum: getChecksum,
   verifyChecksum: verifyChecksum,
+  gprmc: gprmc,
   isValid: isValid,
   latToDmm: latToDmm,
   lngToDmm: lngToDmm,
