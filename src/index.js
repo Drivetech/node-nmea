@@ -34,7 +34,6 @@ const getChecksum = data => {
 const verifyChecksum = data => {
   const idx = data.indexOf('*')
   return getChecksum(data) === parseInt(data.substr(idx + 1, 2), 16)
-  // return true
 }
 
 /**
