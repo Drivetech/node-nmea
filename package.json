@@ -98,5 +98,11 @@
   },
   "nyc": {
     "extends": "nyc-config-common"
+  },
+  "renovate": {
+    "automerge": "minor",
+    "extends": [
+      "config:js-lib"
+    ]
   }
 }
