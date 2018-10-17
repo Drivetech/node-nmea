@@ -1,3 +1,15 @@
+# [2.0.0](https://github.com/lgaticaq/node-nmea/compare/v1.0.4...v2.0.0) (2018-10-17)
+
+
+### Features
+
+* **node:** update min version to v8 ([8ab5575](https://github.com/lgaticaq/node-nmea/commit/8ab5575))
+
+
+### BREAKING CHANGES
+
+* **node:** set min node version to v8
+
 #### 1.0.4 (2017-06-26)
 
 ##### Chores
