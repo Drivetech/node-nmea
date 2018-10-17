@@ -6,7 +6,6 @@
   "scripts": {
     "lint": "eslint . --fix",
     "format": "prettier-standard 'src/**/*.js' 'test/**/*.js'",
-    "precommit": "lint-staged",
     "pretest": "npm run lint -s && npm run format -s",
     "test": "istanbul cover _mocha"
   },
@@ -57,17 +56,24 @@
     "coverage",
     "example.js"
   ],
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
   "lint-staged": {
-    "src/**/*.js": [
-      "eslint --fix",
-      "prettier-standard",
-      "git add"
-    ],
-    "test/**/*.js": [
-      "eslint --fix",
-      "prettier-standard",
-      "git add"
-    ]
+    "linters": {
+      "src/**/*.js": [
+        "eslint --fix",
+        "prettier-standard",
+        "git add"
+      ],
+      "test/**/*.js": [
+        "eslint --fix",
+        "prettier-standard",
+        "git add"
+      ]
+    }
   },
   "tonicExampleFilename": "example.js"
 }
