@@ -1,12 +1,12 @@
 # node-nmea
 
-[![npm version](https://img.shields.io/npm/v/node-nmea.svg?style=flat-square)](https://www.npmjs.com/package/node-nmea)
-[![npm downloads](https://img.shields.io/npm/dm/node-nmea.svg?style=flat-square)](https://www.npmjs.com/package/node-nmea)
-[![Build Status](https://img.shields.io/travis/lgaticaq/node-nmea.svg?style=flat-square)](https://travis-ci.org/lgaticaq/node-nmea)
-[![Coverage Status](https://img.shields.io/coveralls/lgaticaq/node-nmea/master.svg?style=flat-square)](https://coveralls.io/github/lgaticaq/node-nmea?branch=master)
-[![Code Climate](https://img.shields.io/codeclimate/github/lgaticaq/node-nmea.svg?style=flat-square)](https://codeclimate.com/github/lgaticaq/node-nmea)
-[![dependency Status](https://img.shields.io/david/lgaticaq/node-nmea.svg?style=flat-square)](https://david-dm.org/lgaticaq/node-nmea#info=dependencies)
-[![devDependency Status](https://img.shields.io/david/dev/lgaticaq/node-nmea.svg?style=flat-square)](https://david-dm.org/lgaticaq/node-nmea#info=devDependencies)
+[![npm version](https://img.shields.io/npm/v/node-nmea.svg)](https://www.npmjs.com/package/node-nmea)
+[![npm downloads](https://img.shields.io/npm/dm/node-nmea.svg)](https://www.npmjs.com/package/node-nmea)
+[![Build Status](https://img.shields.io/travis/lgaticaq/node-nmea.svg)](https://travis-ci.org/lgaticaq/node-nmea)
+[![Coverage Status](https://coveralls.io/repos/github/lgaticaq/node-nmea/badge.svg?branch=master)](https://coveralls.io/github/lgaticaq/node-nmea?branch=master)
+[![Maintainability](https://api.codeclimate.com/v1/badges/10d567c2055f7c6246b0/maintainability)](https://codeclimate.com/github/lgaticaq/node-nmea/maintainability)
+[![dependency Status](https://img.shields.io/david/lgaticaq/node-nmea.svg)](https://david-dm.org/lgaticaq/node-nmea#info=dependencies)
+[![devDependency Status](https://img.shields.io/david/dev/lgaticaq/node-nmea.svg)](https://david-dm.org/lgaticaq/node-nmea#info=devDependencies)
 
 > Parser for NMEA sentences.
 
