@@ -6,6 +6,7 @@
   "scripts": {
     "lint": "eslint . --fix",
     "format": "prettier-standard 'src/**/*.js' 'test/**/*.js'",
+    "commit": "commit",
     "pretest": "npm run lint -s && npm run format -s",
     "test": "istanbul cover _mocha"
   },
@@ -31,6 +32,9 @@
   "homepage": "https://github.com/lgaticaq/node-nmea#readme",
   "dependencies": {},
   "devDependencies": {
+    "@commitlint/cli": "7.2.1",
+    "@commitlint/config-conventional": "7.1.2",
+    "@commitlint/prompt-cli": "7.2.1",
     "chai": "4.2.0",
     "eslint": "5.7.0",
     "eslint-config-standard": "12.0.0",
@@ -58,7 +62,8 @@
   ],
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged"
+      "pre-commit": "lint-staged",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
   },
   "lint-staged": {
@@ -75,5 +80,10 @@
       ]
     }
   },
-  "tonicExampleFilename": "example.js"
+  "tonicExampleFilename": "example.js",
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  }
 }
