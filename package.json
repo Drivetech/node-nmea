@@ -35,10 +35,10 @@
     "@commitlint/cli": "7.2.1",
     "@commitlint/config-conventional": "7.1.2",
     "@commitlint/prompt-cli": "7.2.1",
-    "@semantic-release/changelog": "3.0.0",
-    "@semantic-release/git": "7.0.4",
-    "@semantic-release/github": "5.0.6",
-    "@semantic-release/npm": "5.0.4",
+    "@semantic-release/changelog": "3.0.1",
+    "@semantic-release/git": "7.0.5",
+    "@semantic-release/github": "5.2.0",
+    "@semantic-release/npm": "5.0.5",
     "chai": "4.2.0",
     "eslint": "5.7.0",
     "eslint-config-standard": "12.0.0",
@@ -53,7 +53,7 @@
     "nyc": "13.1.0",
     "nyc-config-common": "1.0.1",
     "prettier-standard": "8.0.1",
-    "semantic-release": "15.9.17"
+    "semantic-release": "15.10.3"
   },
   "eslintConfig": {
     "extends": "standard",
