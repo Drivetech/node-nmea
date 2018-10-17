@@ -8,7 +8,7 @@
     "format": "prettier-standard 'src/**/*.js' 'test/**/*.js'",
     "commit": "commit",
     "pretest": "npm run lint -s && npm run format -s",
-    "test": "istanbul cover _mocha"
+    "test": "mocha"
   },
   "engines": {
     "node": ">=6"
@@ -47,7 +47,6 @@
     "eslint-plugin-promise": "4.0.1",
     "eslint-plugin-standard": "4.0.0",
     "husky": "1.1.2",
-    "istanbul": "0.4.5",
     "lint-staged": "7.3.0",
     "mocha": "5.2.0",
     "npm-github-config": "2.0.0",
