@@ -1,5 +1,6 @@
 'use strict'
 
+const { describe, it } = require('mocha')
 const nmea = require('../src')
 const expect = require('chai').expect
 

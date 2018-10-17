@@ -51,20 +51,16 @@
   },
   "eslintConfig": {
     "extends": "standard",
-    "parserOptions": {
-      "ecmaVersion": 2017
-    },
-    "env": {
-      "node": true,
-      "mocha": true,
-      "es6": true
-    },
     "rules": {
       "no-console": [
         "error"
       ]
     }
   },
+  "eslintIgnore": [
+    "coverage",
+    "example.js"
+  ],
   "lint-staged": {
     "src/**/*.js": [
       "eslint --fix",
