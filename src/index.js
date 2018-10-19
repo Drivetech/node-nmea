@@ -13,7 +13,7 @@ const pad = (n, width, z) => {
  */
 const getChecksum = data => {
   let checksum
-  let idx1 = data.indexOf('$GP')
+  const idx1 = data.search(/^\$G(P|N)/)
     if (idx1 === -1){
       idx1 = data.indexOf('$GN')
     }
