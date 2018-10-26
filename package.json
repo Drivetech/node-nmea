@@ -37,7 +37,7 @@
     "@commitlint/prompt-cli": "7.2.1",
     "@semantic-release/changelog": "3.0.1",
     "@semantic-release/git": "7.0.5",
-    "@semantic-release/github": "5.2.0",
+    "@semantic-release/github": "5.2.1",
     "@semantic-release/npm": "5.0.5",
     "chai": "4.2.0",
     "eslint": "5.7.0",
