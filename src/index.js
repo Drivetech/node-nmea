@@ -160,9 +160,9 @@ const parseRmc = raw => {
   if (isValid(raw)) {
     data.type = r[1]
     const datetime = `${r[11]}${r[2]}`
-    const pattern = /(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})[.]\d{1,3}/
+    const pattern = /(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})[.](\d{1,3})/
     data.datetime = new Date(
-      datetime.replace(pattern, '20$3-$2-$1T$4:$5:$6.000Z')
+      datetime.replace(pattern, '20$3-$2-$1T$4:$5:$6.$7Z')
     )
     data.loc = {
       geojson: {
@@ -201,7 +201,7 @@ const parseGga = raw => {
   const now = new Date()
   const date = now.toISOString().split('T')[0]
   const pattern = /(\d{2})(\d{2})(\d{2})[.](\d{1,3})/
-  data.datetime = new Date(`${date}T${r[2].replace(pattern, '$1:$2:$3')}.000Z`)
+  data.datetime = new Date(`${date}T${r[2].replace(pattern, '$1:$2:$3.$4Z')}`)
   data.loc = {
     geojson: {
       type: 'Point',
