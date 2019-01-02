@@ -1,3 +1,10 @@
+## [2.0.1](https://github.com/drivetech/node-nmea/compare/v2.0.0...v2.0.1) (2019-01-02)
+
+
+### Bug Fixes
+
+* **package:** transfer to drivetech org ([37336ae](https://github.com/drivetech/node-nmea/commit/37336ae))
+
 # [2.0.0](https://github.com/lgaticaq/node-nmea/compare/v1.0.4...v2.0.0) (2018-10-17)
 
 
