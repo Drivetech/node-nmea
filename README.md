@@ -1,12 +1,12 @@
 # node-nmea
 
-[![npm version](https://img.shields.io/npm/v/node-nmea.svg)](https://www.npmjs.com/package/node-nmea)
-[![npm downloads](https://img.shields.io/npm/dm/node-nmea.svg)](https://www.npmjs.com/package/node-nmea)
-[![Build Status](https://img.shields.io/travis/lgaticaq/node-nmea.svg)](https://travis-ci.org/lgaticaq/node-nmea)
-[![Coverage Status](https://coveralls.io/repos/github/lgaticaq/node-nmea/badge.svg?branch=master)](https://coveralls.io/github/lgaticaq/node-nmea?branch=master)
-[![Maintainability](https://api.codeclimate.com/v1/badges/10d567c2055f7c6246b0/maintainability)](https://codeclimate.com/github/lgaticaq/node-nmea/maintainability)
-[![dependency Status](https://img.shields.io/david/lgaticaq/node-nmea.svg)](https://david-dm.org/lgaticaq/node-nmea#info=dependencies)
-[![devDependency Status](https://img.shields.io/david/dev/lgaticaq/node-nmea.svg)](https://david-dm.org/lgaticaq/node-nmea#info=devDependencies)
+[![npm version](https://img.shields.io/npm/v/@drivetech/node-nmea.svg)](https://www.npmjs.com/package/@drivetech/node-nmea)
+[![npm downloads](https://img.shields.io/npm/dm/@drivetech/node-nmea.svg)](https://www.npmjs.com/package/@drivetech/node-nmea)
+[![Build Status](https://travis-ci.org/Drivetech/node-nmea.svg?branch=master)](https://travis-ci.org/Drivetech/node-nmea)
+[![Coverage Status](https://coveralls.io/repos/github/drivetech/node-nmea/badge.svg?branch=master)](https://coveralls.io/github/drivetech/node-nmea?branch=master)
+[![Maintainability](https://api.codeclimate.com/v1/badges/0dd7acaf25e6b4a6d2e3/maintainability)](https://codeclimate.com/github/Drivetech/node-nmea/maintainability)
+[![dependency Status](https://img.shields.io/david/drivetech/node-nmea.svg)](https://david-dm.org/drivetech/node-nmea#info=dependencies)
+[![devDependency Status](https://img.shields.io/david/dev/drivetech/node-nmea.svg)](https://david-dm.org/drivetech/node-nmea#info=devDependencies)
 
 > Parser for NMEA sentences.
 
@@ -52,14 +52,14 @@ Value         | Definition
 ## Installation
 
 ```bash
-$ npm install node-nmea
+$ npm install @drivetech/node-nmea
 ```
 
 ## Use
 
-[Try on Tonic](https://tonicdev.com/npm/node-nmea)
+[Try on RunKit](https://npm.runkit.com/@drivetech/node-nmea)
 ```js
-const nmea = require('node-nmea')
+const nmea = require('@drivetech/node-nmea')
 
 const raw = '$GPRMC,161006.425,A,7855.6020,S,13843.8900,E,154.89,84.62,110715,173.1,W,A*30'
 const data = nmea.parse(raw)

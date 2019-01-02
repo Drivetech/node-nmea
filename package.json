@@ -1,5 +1,5 @@
 {
-  "name": "node-nmea",
+  "name": "@drivetech/node-nmea",
   "version": "2.0.0",
   "description": "Parser for NMEA sentences.",
   "main": "src",
@@ -15,7 +15,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/lgaticaq/node-nmea.git"
+    "url": "https://github.com/drivetech/node-nmea.git"
   },
   "keywords": [
     "nmea",
@@ -27,9 +27,9 @@
   "author": "Leonardo Gatica <lgatica@protonmail.com> (https://about.me/lgatica)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/lgaticaq/node-nmea/issues"
+    "url": "https://github.com/drivetech/node-nmea/issues"
   },
-  "homepage": "https://github.com/lgaticaq/node-nmea#readme",
+  "homepage": "https://github.com/drivetech/node-nmea#readme",
   "dependencies": {},
   "devDependencies": {
     "@commitlint/cli": "7.2.1",
@@ -104,5 +104,8 @@
     "extends": [
       "config:js-lib"
     ]
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
