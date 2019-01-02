@@ -3,7 +3,7 @@
 [![npm version](https://img.shields.io/npm/v/@drivetech/node-nmea.svg)](https://www.npmjs.com/package/@drivetech/node-nmea)
 [![npm downloads](https://img.shields.io/npm/dm/@drivetech/node-nmea.svg)](https://www.npmjs.com/package/@drivetech/node-nmea)
 [![Build Status](https://travis-ci.org/Drivetech/node-nmea.svg?branch=master)](https://travis-ci.org/Drivetech/node-nmea)
-[![Coverage Status](https://coveralls.io/repos/github/drivetech/node-nmea/badge.svg?branch=master)](https://coveralls.io/github/drivetech/node-nmea?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/Drivetech/node-nmea/badge.svg?branch=master)](https://coveralls.io/github/Drivetech/node-nmea?branch=master)
 [![Maintainability](https://api.codeclimate.com/v1/badges/0dd7acaf25e6b4a6d2e3/maintainability)](https://codeclimate.com/github/Drivetech/node-nmea/maintainability)
 [![dependency Status](https://img.shields.io/david/drivetech/node-nmea.svg)](https://david-dm.org/drivetech/node-nmea#info=dependencies)
 [![devDependency Status](https://img.shields.io/david/dev/drivetech/node-nmea.svg)](https://david-dm.org/drivetech/node-nmea#info=devDependencies)
