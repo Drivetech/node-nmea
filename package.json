@@ -50,7 +50,7 @@
     "lint-staged": "8.1.0",
     "mocha": "5.2.0",
     "npm-github-config": "2.0.0",
-    "nyc": "13.1.0",
+    "nyc": "13.3.0",
     "nyc-config-common": "1.0.1",
     "prettier-standard": "8.0.1",
     "semantic-release": "15.13.2"
