@@ -44,6 +44,16 @@ const gprmc = /^\$GP(\w{3}),(\d{6}([.]\d+)?),([AV]),(\d{4}([.]\d+)?,[NS]),(\d{5}
 const gpgga = /^\$GP(\w{3}),(\d{6}([.]\d+)?),(\d{4}[.]\d+,[NS]),(\d{5}[.]\d+,[WE]),([0-8]),(\d{1,2}),(\d{1,3}[.]\d{1,3})?,([-]?\d+([.]\d+)?)?,M?,([-]?\d+([.]\d+)?)?,M?,(\d+([.]\d+)?)?,(\d{4})?,?([ADENS])?\*([0-9A-F]{2})$/
 
 /**
+ * reqex for GPGSA valid data
+ */
+const gpgsa = /^\$GP(\w{3}),([AM]),([1-3]),(\d+)?,(\d+)?,(\d+)?,(\d+)?,(\d+)?,(\d+)?,(\d+)?,(\d+)?,(\d+)?,(\d+)?,(\d+)?,(\d+)?,(\d+([.]\d+)?),(\d+([.]\d+)?),(\d+([.]\d+)?)\*([0-9A-F]{2})$/
+
+/**
+ * reqex for GPVTG valid data
+ */
+const gpvtg = /^\$GP(\w{3}),(\d+([.]\d+)?),([T]),(\d+([.]\d+)?),([M]),(\d+([.]\d+)?),([N]),(\d+([.]\d+)?),([K]),([A])\*([0-9A-F]{2})$/
+
+/**
  * Verify if raw data is valid
  *
  * @param {string} data - raw data
@@ -223,13 +233,69 @@ const parseGga = raw => {
   return data
 }
 
+/**
+ * Parse GPGSA raw data
+ *
+ * @param {string} raw - raw data
+ * @return {object} data parse
+ */
+const parseGsa = raw => {
+  let data = { raw: raw, valid: false }
+
+  const r = gpgsa.exec(raw)
+
+  data.raw = raw
+  data.type = r[1]
+  data.mode1 = r[2]
+  data.mode2 = parseInt(r[3], 10)
+  data.sv = r.slice(3, 16).map(x => x ? parseInt(x, 10) : null)
+  data.pdop = parseFloat(r[16])
+  data.hdop = parseFloat(r[18])
+  data.vdop = parseFloat(r[20])
+
+  data.valid = verifyChecksum(r[0])
+  return data
+}
+
+/**
+ * Parse GPVTG raw data
+ *
+ * @param {string} raw - raw data
+ * @return {object} data parse
+ */
+const parseVtg = raw => {
+  let data = { raw: raw, valid: false }
+  const r = gpvtg.exec(raw)
+  
+  data.raw = raw
+  data.type = r[1]
+  data.track = {
+    'degrees_True': parseFloat(r[2]),
+    'degrees_Magnetic': parseFloat(r[5])
+  };
+
+  data.speed = {
+    knots: parseFloat(r[8]),
+    kmh: parseFloat(r[11]),
+  };
+
+  data.valid = verifyChecksum(r[0])
+  return data
+}
+
+
 const parse = raw => {
   let data = { raw: raw, valid: false }
   if (gprmc.test(raw)) {
     data = parseRmc(raw)
   } else if (gpgga.test(raw)) {
     data = parseGga(raw)
+  } else if (gpgsa.test(raw)) {
+    data = parseGsa(raw)
+  } else if (gpvtg.test(raw)) {
+    data = parseVtg(raw)
   }
+ 
   return data
 }
 
