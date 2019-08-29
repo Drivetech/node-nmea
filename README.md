@@ -13,8 +13,8 @@
 Available sentences:
 * GPRMC - recommended minimum data for gps
 * GPGGA - time, position, and fix related data
-* [!GPGSA](http://aprs.gids.nl/nmea/#gsa)] - GPS DOP and active satellites
-* [!GPVTG](http://aprs.gids.nl/nmea/#vtg)] - Track Made Good and Ground Speed
+* [GPGSA](http://aprs.gids.nl/nmea/#gsa) - GPS DOP and active satellites
+* [GPVTG](http://aprs.gids.nl/nmea/#vtg) - Track Made Good and Ground Speed
 
 Example: `$GPRMC,161006.425,A,7855.6020,S,13843.8900,E,154.89,84.62,110715,173.1,W,A*30`
 
