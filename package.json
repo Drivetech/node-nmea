@@ -53,7 +53,7 @@
     "nyc": "13.3.0",
     "nyc-config-common": "1.0.1",
     "prettier-standard": "8.0.1",
-    "semantic-release": "15.13.28"
+    "semantic-release": "15.13.29"
   },
   "eslintConfig": {
     "extends": "standard",
