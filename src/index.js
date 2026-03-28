@@ -13,7 +13,10 @@ const pad = (n, width, z) => {
  */
 const getChecksum = data => {
   let checksum
-  const idx1 = data.indexOf('$GP')
+  const idx1 = data.search(/^\$G(P|N)/)
+    if (idx1 === -1){
+      idx1 = data.indexOf('$GN')
+    }
   const idx2 = data.indexOf('*')
   checksum = data
     .slice(idx1 + 1, idx2)
@@ -36,12 +39,13 @@ const verifyChecksum = data => {
 /**
  * regex for GPRMC valid data
  */
-const gprmc = /^\$GP(\w{3}),(\d{6}([.]\d+)?),([AV]),(\d{4}([.]\d+)?,[NS]),(\d{5}([.]\d+)?,[WE]),(\d{1,3}[.]\d{1,3})?,(\d{1,3}[.]\d{1,3})?,(\d{6}),((\d{1,3}[.]\d{1,3})?,([WE])?),?([ADENS])?\*([0-9A-F]{2})$/
-
+const gprmc = /^\$G[NP](\w{3}),(\d{6}([.]\d+)?),([AV]),(\d{4}([.]\d+)?,[NS]),(\d{5}([.]\d+)?,[WE]),(\d{1,3}[.]\d{1,3})?,(\d{1,3}[.]\d{1,3})?,(\d{6}),((\d{1,3}[.]\d{1,3})?,([WE])?),?([ADENS])?\*([0-9A-F]{2})$/
 /**
  * regex for GPGGA valid data
  */
-const gpgga = /^\$GP(\w{3}),(\d{6}([.]\d+)?),(\d{4}[.]\d+,[NS]),(\d{5}[.]\d+,[WE]),([0-8]),(\d{1,2}),(\d{1,3}[.]\d{1,3})?,([-]?\d+([.]\d+)?)?,M?,([-]?\d+([.]\d+)?)?,M?,(\d+([.]\d+)?)?,(\d{4})?,?([ADENS])?\*([0-9A-F]{2})$/
+const gpgga = /^\$G[NP](\w{3}),(\d{6}([.]\d+)?),(\d{4}[.]\d+,[NS]),(\d{5}[.]\d+,[WE]),([0-8]),(\d{1,2}),(\d{1,3}[.]\d{1,3})?,([-]?\d+([.]\d+)?)?,M?,([-]?\d+([.]\d+)?)?,M?,(\d+([.]\d+)?)?,(\d{4})?,?([ADENS])?\*([0-9A-F]{2})$/
+
+const gngll = /^\$G[NP](\w{3}),(\d{4}[.]\d+,[NS]),(\d{5}[.]\d+,[WE]),(\d{6}([.]\d+)?),([AV]),?([ADENS])?\*([0-9A-F]{2})$/
 
 /**
  * Verify if raw data is valid
@@ -50,7 +54,7 @@ const gpgga = /^\$GP(\w{3}),(\d{6}([.]\d+)?),(\d{4}[.]\d+,[NS]),(\d{5}[.]\d+,[WE
  * @return {boolean} if valid data
  */
 const isValid = data => {
-  return gprmc.test(data) && verifyChecksum(data)
+ return gprmc.test(data) && verifyChecksum(data)
 }
 
 /**
@@ -223,6 +227,36 @@ const parseGga = raw => {
   return data
 }
 
+/**
+ * Parse GNGLL raw data
+ *
+ * @param {string} raw - raw data
+ * @return {object} data parse
+ */
+const parseGll = raw => {
+  let data = { raw: raw, valid: false }
+  const r = gngll.exec(raw)
+  data.raw = raw
+  data.type = r[1]
+  const now = new Date()
+  const date = now.toISOString().split('T')[0]
+  const pattern = /(\d{2})(\d{2})(\d{2})[.](\d{1,3})/
+  data.datetime = new Date(`${date}T${r[4].replace(pattern, '$1:$2:$3')}.000Z`)
+  data.loc = {
+    geojson: {
+      type: 'Point',
+      coordinates: [degToDec(r[3]), degToDec(r[2])]
+    },
+    dmm: {
+      latitude: r[2],
+      longitude: r[3]
+    }
+  }
+  data.valid = verifyChecksum(r[0])
+  return data
+}
+
+
 const parse = raw => {
   let data = { raw: raw, valid: false }
   if (gprmc.test(raw)) {
@@ -230,6 +264,9 @@ const parse = raw => {
   } else if (gpgga.test(raw)) {
     data = parseGga(raw)
   }
+    else if (gngll.test(raw)){
+    data = parseGll(raw)
+    }
   return data
 }
 
